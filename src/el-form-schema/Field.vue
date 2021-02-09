@@ -1,0 +1,243 @@
+<template>
+  <div>
+    <!-- 纯字符串 -->
+    <span
+      v-if="
+        dynamicComponent === 'el-plain-text' &&
+          (schema.visible ? schema.visible : true)
+      "
+      v-bind="schema.field"
+    >
+      {{ String(model[prop]) }}
+    </span>
+
+    <!-- 按钮 -->
+    <!-- <el-button
+      v-else-if="dynamicComponent === 'el-button'"
+      v-bind="schema.field"
+      :disabled="schema.disabled"
+    >
+      <template v-if="schema.field && schema.field.inner">
+        <span v-if="typeof schema.field.inner === 'string'">
+          {{ schema.field.inner }}
+        </span>
+        <component v-else :is="schema.field.inner"></component>
+      </template>
+      <span v-else>{{ model[prop] }}</span>
+    </el-button> -->
+
+    <!-- 链接 -->
+    <template v-else-if="dynamicComponent === 'el-link'">
+      <el-link
+        :href="model[prop]"
+        v-bind="schema.field"
+        :disabled="schema.disabled"
+      >
+        <template v-if="schema.field && schema.field.inner">
+          <span v-if="typeof schema.field.inner === 'string'">
+            {{ schema.field.inner }}
+          </span>
+          <component v-else :is="schema.field.inner"></component>
+        </template>
+        <span v-else>{{ model[prop] }}</span>
+      </el-link>
+    </template>
+
+    <!-- input & type === 'number' -->
+    <component
+      v-else-if="
+        (dynamicComponent === 'el-input' || !schema.component) &&
+          schema.type === 'number'
+      "
+      :is="dynamicComponent"
+      :disabled="schema.disabled"
+      v-model.number="model[prop]"
+      v-bind="$attrs"
+    >
+      <template v-if="schema.componentSlot">
+        <common-slot
+          v-for="(component, slot) in schema.componentSlot"
+          :key="slot"
+          :slot="slot"
+          :prop="prop"
+          :component="component"
+        />
+      </template>
+    </component>
+
+    <!-- upload -->
+    <template v-else-if="dynamicComponent === 'el-upload'">
+      <el-upload v-bind="schema.field" :disabled="schema.disabled">
+        <!-- <template v-if="schema.field.drag">
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+        </template>
+        <template v-else-if="schema.field.listType === 'picture-card'">
+          <i class="el-icon-plus"></i>
+        </template>
+        <template v-else>
+          <el-button size="small" type="primary">点击上传</el-button>
+        </template> -->
+
+        <!-- custom-slot -->
+        <template> </template>
+
+        <!-- element-slot -->
+        <template v-if="schema.componentSlot">
+          <common-slot
+            v-for="(component, slot) in schema.componentSlot"
+            :key="slot"
+            :slot="slot"
+            :prop="prop"
+            :component="component"
+          />
+        </template>
+      </el-upload>
+    </template>
+
+    <!-- 单选框 -->
+    <el-radio-group
+      v-else-if="
+        dynamicComponent === 'el-radio-group' || dynamicComponent === 'el-radio'
+      "
+      :disabled="schema.disabled"
+      v-bind="schema.field"
+      v-model="model[prop]"
+    >
+      <!-- 将 opt 的 value 属性传递给 label，label 属性只做展示，这里的用法与 element-ui 有一些区别，element-ui 的 label 为选中状态的值 -->
+      <component
+        v-for="opt in (schema.field && schema.field.options) || []"
+        :is="schema.field.button ? 'el-radio-button' : 'el-radio'"
+        :key="opt.value"
+        :label="opt.value"
+        v-bind="opt"
+      >
+        {{ opt.label }}
+      </component>
+    </el-radio-group>
+
+    <!-- 多选框 -->
+    <el-checkbox-group
+      v-else-if="
+        dynamicComponent === 'el-checkbox-group' ||
+          dynamicComponent === 'el-checkbox'
+      "
+      :disabled="schema.disabled"
+      v-bind="schema.field"
+      v-model="model[prop]"
+    >
+      <component
+        v-for="opt in (schema.field && schema.field.options) || []"
+        :is="schema.field.button ? 'el-checkbox-button' : 'el-checkbox'"
+        :key="opt.value"
+        :label="opt.value"
+        v-bind="opt"
+      >
+        {{ opt.label }}
+      </component>
+    </el-checkbox-group>
+
+    <!-- 选择器 -->
+    <el-select
+      v-else-if="dynamicComponent === 'el-select'"
+      :disabled="schema.disabled"
+      v-bind="schema.field"
+      v-model="model[prop]"
+    >
+      <el-option
+        v-for="(opt, index) in (schema.field && schema.field.options) || []"
+        :key="opt.value + '-' + index"
+        v-bind="opt"
+      >
+        <!-- options slot -->
+        <template v-if="opt.inner">
+          <span v-if="typeof opt.inner === 'string'">
+            {{ opt.inner }}
+          </span>
+          <component v-else :is="opt.inner"></component>
+        </template>
+      </el-option>
+      <!-- select dlot -->
+      <template v-if="schema.componentSlot">
+        <common-slot
+          v-for="(component, slot) in schema.componentSlot"
+          :key="slot"
+          :slot="slot"
+          :prop="prop"
+          :component="component"
+        />
+      </template>
+    </el-select>
+
+    <!-- no render -->
+    <el-alert
+      v-else-if="
+        dynamicComponent &&
+          typeof dynamicComponent === 'object' &&
+          typeof dynamicComponent.render !== 'function'
+      "
+      title="未知组件类型，请确保component属性格式正确"
+      type="error"
+      :closable="false"
+    >
+    </el-alert>
+
+    <!-- common component -->
+    <component
+      v-else
+      :is="dynamicComponent"
+      :disabled="schema.disabled"
+      v-_model:[schema.type]="model[prop]"
+      v-model="model[prop]"
+      v-bind="$attrs"
+    >
+      <!-- 默认slot -->
+      <template v-if="schema.field && schema.field.inner">
+        <span v-if="typeof schema.field.inner === 'string'">
+          {{ schema.field.inner }}
+        </span>
+        <component
+          v-else-if="schema.field.inner.render"
+          :is="schema.field.inner"
+        ></component>
+      </template>
+      <!-- 具名的slot 可能有多个 -->
+      <template v-if="schema.componentSlot">
+        <common-slot
+          v-for="(component, slot) in schema.componentSlot"
+          :key="slot"
+          :slot="slot"
+          :prop="prop"
+          :component="component"
+        />
+      </template>
+    </component>
+  </div>
+</template>
+
+<script lang="ts">
+// import * as _ from "lodash";
+/* @ts-ignore */
+import CommonSlot from "./CommonSlot.vue";
+import { Vue, Component, Prop } from "vue-property-decorator";
+
+@Component({
+  name: "Field",
+  components: {
+    CommonSlot
+  }
+})
+export default class Field extends Vue {
+  @Prop({ required: true }) dynamicComponent!: object;
+  @Prop({ required: true }) model!: object;
+  @Prop({ required: true }) prop!: string;
+  @Prop({ required: true }) schema!: object;
+  @Prop({ required: false, default: false }) disabled!: object;
+
+  // get internalComponent() {
+
+  // }
+}
+</script>
+
+<style lang="scss"></style>
