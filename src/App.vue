@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <el-form-schema ref="form" :schema="schema" :model="model">
+    <el-form-schema
+      ref="form"
+      :schema="schema"
+      :model="model"
+      @validate="handleFunc"
+    >
     </el-form-schema>
   </div>
 </template>
@@ -53,7 +58,8 @@ export default {
         cascader: "",
         cascaderPanel: "",
         switch: "",
-        slider: 1
+        slider: 1,
+        transfer: [1, 4]
       }
     };
   },
@@ -64,7 +70,7 @@ export default {
         config: {
           inline: true,
           labelSuffix: ":",
-          labelWidth: "120px",
+          // labelWidth: "120px",
           hideRequiredAsterisk: false,
           labelPosition: "left",
           statusIcon: true
@@ -124,6 +130,11 @@ export default {
               placeholder: "请输入年龄",
               type: "text",
               clearable: true
+            },
+            events: {
+              clear: () => {
+                console.log(1111111);
+              }
             },
             visible: true,
             rules: [
@@ -214,12 +225,12 @@ export default {
                 }
               },
               append: "12313212"
-            }
+            },
             // visible: false,
             // rules: [{ required: true, message: "请选择家乡", trigger: "blur" }],
-            // config: {
-            //   labelWidth: "120px"
-            // }
+            config: {
+              // labelWidth: "120px"
+            }
           },
           text: {
             label: "纯字符串",
@@ -252,11 +263,14 @@ export default {
             // disabled: true,
             field: {
               action: "https://jsonplaceholder.typicode.com/posts/",
-              drag: true
+              drag: true,
+              onSuccess: (res, file, filest) => {
+                console.log(res, file, filest);
+              }
               // listType: "picture-card",
             },
             componentSlot: {
-              tip: "123"
+              tip: "上传的文件不要大于500KB"
               // trigger: '123'
             }
           },
@@ -311,6 +325,11 @@ export default {
           select: {
             label: "选择器",
             component: "select",
+            events: {
+              removeTag: () => {
+                console.log(111);
+              }
+            },
             field: {
               multiple: true,
               options: [
@@ -334,8 +353,9 @@ export default {
             component: "input-number"
           },
           button: {
-            component: {},
+            component: "button",
             field: {
+              width: 100,
               inner: {},
               autofocus: true
             }
@@ -889,13 +909,76 @@ export default {
           },
           switch: {
             component: "switch",
-            field: {}
+            field: {
+              width: 100
+            }
           },
           slider: {
+            label: "slider",
             component: "slider",
             field: {
-              width: "100px",
-              showInput: true
+              // vertical: true,
+              width: 100
+              // showInput: true
+            },
+            config: {
+              // labelWidth: "12px"
+            }
+          },
+          time: {
+            component: "el-time-picker",
+            field: {
+              isRange: true
+            }
+          },
+          date: {
+            component: "date-picker",
+            events: {},
+            field: {
+              text: "123",
+              startPlaceholder: "开始日期",
+              endPlaceholder: "结束日期",
+              type: "datetimerange"
+            }
+          },
+          transfer: {
+            component: "transfer",
+            events: {
+              change: (a, b, c) => {
+                console.log("这里触发了change", a, b, c);
+              },
+              leftCheckChange: () => {
+                console.log("左侧的消失了");
+              }
+            },
+            field: {
+              data: (() => {
+                const data = [];
+                for (let i = 1; i <= 15; i++) {
+                  data.push({
+                    key: i,
+                    label: `备选项 ${i}`,
+                    disabled: i % 4 === 0
+                  });
+                }
+                return data;
+              })()
+            },
+            children: {
+              a: {
+                label: "123"
+              },
+              parentName: {
+                label: "亲人姓名",
+                component: "el-input",
+                field: {
+                  placeholder: "请输入姓名",
+                  type: "text"
+                },
+                rules: [
+                  { required: true, message: "姓名不能为空", trigger: "blur" }
+                ]
+              }
             }
           }
         }
@@ -905,6 +988,9 @@ export default {
   methods: {
     handleIconClick() {
       console.log("这里是input的slot的事件");
+    },
+    handleFunc() {
+      console.log("事件触发了");
     }
   }
 };

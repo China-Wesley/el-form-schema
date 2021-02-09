@@ -1,5 +1,11 @@
 <template>
-  <el-form v-if="showForm" :model="model" v-bind="schema.config">
+  <el-form
+    v-if="showForm"
+    :model="model"
+    v-bind="schema.config"
+    class="el-form-schema"
+    v-on="$listeners"
+  >
     <!-- form-item -->
     <template>
       <el-form-schema-item
@@ -18,11 +24,10 @@
 </template>
 
 <script lang="ts">
-// import * as _ from "lodash";
-import { isEmptyObject, hasOwnProperty } from "./util/index";
-import { schema } from "./util/interface";
 /* @ts-ignore */
 import ElFormSchemaItem from "./Item";
+import { isEmptyObject, hasOwnProperty } from "./util/index";
+import { Schema } from "./util/interface";
 import { Vue, Component, Prop } from "vue-property-decorator";
 
 @Component({
@@ -32,7 +37,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
   }
 })
 export default class ElFoemSchema extends Vue {
-  @Prop({ required: true }) schema!: schema;
+  @Prop({ required: true }) schema!: Schema;
   @Prop({ required: true }) model!: object;
   @Prop({ required: false }) layout!: object;
 

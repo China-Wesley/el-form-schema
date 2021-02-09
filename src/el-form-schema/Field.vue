@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="`el-form-schema-field-wrap-${prop}`">
     <!-- 纯字符串 -->
     <span
       v-if="
@@ -7,6 +7,7 @@
           (schema.visible ? schema.visible : true)
       "
       v-bind="schema.field"
+      v-on="getEventsName"
     >
       {{ String(model[prop]) }}
     </span>
@@ -32,6 +33,7 @@
         :href="model[prop]"
         v-bind="schema.field"
         :disabled="schema.disabled"
+        v-on="getEventsName"
       >
         <template v-if="schema.field && schema.field.inner">
           <span v-if="typeof schema.field.inner === 'string'">
@@ -53,6 +55,7 @@
       :disabled="schema.disabled"
       v-model.number="model[prop]"
       v-bind="$attrs"
+      v-on="getEventsName"
     >
       <template v-if="schema.componentSlot">
         <common-slot
@@ -60,6 +63,7 @@
           :key="slot"
           :slot="slot"
           :prop="prop"
+          :class="`${dynamicComponent}_${slot}`"
           :component="component"
         />
       </template>
@@ -67,8 +71,12 @@
 
     <!-- upload -->
     <template v-else-if="dynamicComponent === 'el-upload'">
-      <el-upload v-bind="schema.field" :disabled="schema.disabled">
-        <!-- <template v-if="schema.field.drag">
+      <el-upload
+        v-bind="schema.field"
+        :disabled="schema.disabled"
+        v-on="getEventsName"
+      >
+        <template v-if="schema.field.drag">
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
         </template>
@@ -77,10 +85,7 @@
         </template>
         <template v-else>
           <el-button size="small" type="primary">点击上传</el-button>
-        </template> -->
-
-        <!-- custom-slot -->
-        <template> </template>
+        </template>
 
         <!-- element-slot -->
         <template v-if="schema.componentSlot">
@@ -89,6 +94,7 @@
             :key="slot"
             :slot="slot"
             :prop="prop"
+            :class="`${dynamicComponent}_${slot}`"
             :component="component"
           />
         </template>
@@ -103,6 +109,7 @@
       :disabled="schema.disabled"
       v-bind="schema.field"
       v-model="model[prop]"
+      v-on="getEventsName"
     >
       <!-- 将 opt 的 value 属性传递给 label，label 属性只做展示，这里的用法与 element-ui 有一些区别，element-ui 的 label 为选中状态的值 -->
       <component
@@ -125,6 +132,7 @@
       :disabled="schema.disabled"
       v-bind="schema.field"
       v-model="model[prop]"
+      v-on="getEventsName"
     >
       <component
         v-for="opt in (schema.field && schema.field.options) || []"
@@ -143,6 +151,7 @@
       :disabled="schema.disabled"
       v-bind="schema.field"
       v-model="model[prop]"
+      v-on="getEventsName"
     >
       <el-option
         v-for="(opt, index) in (schema.field && schema.field.options) || []"
@@ -164,6 +173,7 @@
           :key="slot"
           :slot="slot"
           :prop="prop"
+          :class="`${dynamicComponent}_${slot}`"
           :component="component"
         />
       </template>
@@ -190,6 +200,7 @@
       v-_model:[schema.type]="model[prop]"
       v-model="model[prop]"
       v-bind="$attrs"
+      v-on="getEventsName"
     >
       <!-- 默认slot -->
       <template v-if="schema.field && schema.field.inner">
@@ -208,6 +219,7 @@
           :key="slot"
           :slot="slot"
           :prop="prop"
+          :class="`${dynamicComponent}_${slot}`"
           :component="component"
         />
       </template>
@@ -216,7 +228,7 @@
 </template>
 
 <script lang="ts">
-// import * as _ from "lodash";
+import * as _ from "lodash";
 /* @ts-ignore */
 import CommonSlot from "./CommonSlot.vue";
 import { Vue, Component, Prop } from "vue-property-decorator";
@@ -234,9 +246,20 @@ export default class Field extends Vue {
   @Prop({ required: true }) schema!: object;
   @Prop({ required: false, default: false }) disabled!: object;
 
-  // get internalComponent() {
-
-  // }
+  // 事件名两种形式: 小驼峰、小短线都可以
+  get getEventsName() {
+    const cacheObj: any = {};
+    _.forIn((this.schema as any).events, (item, prop) => {
+      this.$set(
+        cacheObj,
+        prop.replace(/[A-Z]/g, e => {
+          return "-" + e.toLowerCase();
+        }),
+        item
+      );
+    });
+    return cacheObj;
+  }
 }
 </script>
 

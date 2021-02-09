@@ -3,14 +3,19 @@
     v-if="showItem"
     :prop="prop"
     :rules="schema.rules"
+    :label="isLabelString ? schema.label : ''"
+    :style="`width: ${schema.width}; height: ${schema.height}`"
+    :class="`el-schema-form-item-${prop}`"
     v-bind="schema.config"
   >
     <!-- label -->
-    <template slot="label">
-      <span v-if="typeof schema.label === 'string'" :for="prop">{{
-        "" + schema.label + labelSuffix
-      }}</span>
-      <component v-else :is="schema.label" :for="prop"></component>
+    <template v-if="!isLabelString" slot="label">
+      <component
+        :is="schema.label"
+        :for="prop"
+        :class="`el-form-schema-item-label-${prop}`"
+      ></component
+      >{{ labelSuffix }}
     </template>
     <!-- 组件部分 -->
     <field
@@ -28,23 +33,22 @@
         :model="model"
         :prop="prop"
         :schema="innerSchema"
+        :labelSuffix="labelSuffix"
       ></el-form-schema-item>
     </template>
   </el-form-item>
 </template>
 
 <script lang="ts">
-// import _ from "lodash";
+/* @ts-ignore */
+import Field from "./Field";
 import {
   isEmptyObject,
   hasOwnProperty,
   checkStringHaveHtml
 } from "./util/index";
-import { item } from "./util/interface";
+import { Item } from "./util/interface";
 import { Vue, Component, Prop } from "vue-property-decorator";
-/* @ts-ignore */
-import Field from "./Field";
-// import { delete } from "vue/types/umd";
 
 @Component({
   name: "ElFormSchemaItem",
@@ -53,7 +57,7 @@ import Field from "./Field";
   }
 })
 export default class ElFormSchemaItem extends Vue {
-  @Prop({ required: true }) schema!: item;
+  @Prop({ required: true }) schema!: Item;
   @Prop({ required: true }) model!: object;
   @Prop({ required: true }) prop!: string;
   @Prop({ required: false }) labelSuffix!: string;
@@ -70,6 +74,14 @@ export default class ElFormSchemaItem extends Vue {
         ? (this.schema as any).visible
         : true)
     );
+  }
+
+  get isLabelString() {
+    if (typeof this.schema.label === "string") {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   // component可以支持 标签名、Render语法
@@ -119,4 +131,8 @@ export default class ElFormSchemaItem extends Vue {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.el-schema-form-item {
+  // width: 100%;
+}
+</style>

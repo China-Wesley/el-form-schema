@@ -1,5 +1,7 @@
 <template>
-  <div v-if="typeof component === 'string'">{{ component }}</div>
+  <div v-if="typeof component === 'string'">
+    {{ component }}
+  </div>
   <component v-else :prop="prop" :is="component"></component>
 </template>
 
