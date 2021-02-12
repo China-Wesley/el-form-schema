@@ -9,7 +9,10 @@
     v-bind="schema.config"
   >
     <!-- label -->
-    <template v-if="!isLabelString" slot="label">
+    <template
+      v-if="!isLabelString && !isBasicItem.flag && !schema.items"
+      slot="label"
+    >
       <component
         :is="schema.label"
         :for="prop"
@@ -17,24 +20,59 @@
       ></component
       >{{ labelSuffix }}
     </template>
-    <!-- 组件部分 -->
+    <!-- 组件部分(基础数据类型) -->
     <field
+      v-if="isBasicItem.flag"
+      :ref="prop"
       :dynamic-component="getdDynamicComponent"
       :prop="prop"
       :model="model"
       :schema="schema"
+      :parent-schema="parentSchema"
       v-bind="{ ...schema.field, ...schema.dynamicProps }"
     ></field>
-    <!-- children -->
-    <template v-if="haveChildren">
+    <!-- type === 'object' -->
+    <template v-else-if="isBasicItem.type === 'object'">
       <el-form-schema-item
-        v-for="(innerSchema, prop) in schema.children"
-        :key="prop"
-        :model="model"
-        :prop="prop"
+        v-for="(innerSchema, _prop) in schema.items"
+        :ref="prop"
+        :key="_prop"
+        :prop="`${prop}_wzw_object_split_${_prop}`"
         :schema="innerSchema"
+        :parent-schema="schema"
         :labelSuffix="labelSuffix"
       ></el-form-schema-item>
+    </template>
+    <!-- type === 'array' -->
+    <template v-else>
+      <!-- 之所以判断，是因为不能对model造成影响，没想到什么好方法，在model为[]时还能有一个默认的 -->
+      <template v-if="getArrayModel.targetModel.length !== 0">
+        <el-form-schema-item
+          v-for="(item, index) in getArrayModel.targetModel"
+          :key="
+            `${prop
+              .replace(/_wzw_object_split_/g, '.')
+              .replace(/_wzw_array_split_/g, '_')}_${index}`
+          "
+          :ref="prop"
+          :prop="`${prop}_wzw_array_split_${'_wzw_array_index_' + index}`"
+          :model="model"
+          :schema="schema.items"
+          :parent-schema="schema"
+          :labelSuffix="labelSuffix"
+        ></el-form-schema-item>
+      </template>
+      <template v-else>
+        <el-form-schema-item
+          :ref="prop"
+          :prop="`${prop}${'_wzw_array_index_0'}`"
+          :model="model"
+          :schema="schema.items"
+          :parent-schema="schema"
+          :labelSuffix="labelSuffix"
+        ></el-form-schema-item>
+      </template>
+      <el-button>增加</el-button>
     </template>
   </el-form-item>
 </template>
@@ -45,10 +83,11 @@ import Field from "./Field";
 import {
   isEmptyObject,
   hasOwnProperty,
-  checkStringHaveHtml
+  checkStringHaveHtml,
+  getMatchFieldModel
 } from "./util/index";
-import { Item } from "./util/interface";
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Item, Schema } from "./util/interface";
+import { Vue, Component, Prop, Inject, Provide } from "vue-property-decorator";
 
 @Component({
   name: "ElFormSchemaItem",
@@ -58,12 +97,54 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 })
 export default class ElFormSchemaItem extends Vue {
   @Prop({ required: true }) schema!: Item;
-  @Prop({ required: true }) model!: object;
+  @Prop({ required: true }) parentSchema!: Item | Schema;
   @Prop({ required: true }) prop!: string;
+  @Prop({ required: false }) model!: object;
   @Prop({ required: false }) labelSuffix!: string;
 
-  get haveChildren() {
-    return hasOwnProperty(this.schema, "children");
+  @Inject()
+  gobleModel!: object;
+
+  @Inject()
+  gobleSchema!: object;
+
+  @Provide()
+  fieldModel = this.getArrayModel;
+
+  mounted() {
+    // this.stratifiedProp(this.prop);
+  }
+
+  created() {
+    // this.isNomalArrayItem();
+  }
+
+  get getArrayModel() {
+    return getMatchFieldModel(this.prop, this.gobleModel, this.gobleSchema);
+  }
+
+  get isNomalArrayItem() {
+    return !this.schema.items && this.isBasicItem;
+  }
+
+  // 判断item是不是基础数据类型
+  get isBasicItem() {
+    if (this.schema.type === "object" || this.schema.type === "array") {
+      if (!hasOwnProperty(this.schema, "items")) {
+        // console.log(this.schema);
+        console.error(
+          `Please make sure, when item type === '${this.schema.type}', there must have 'items' attribute`
+        );
+      }
+      return {
+        flag: false,
+        type: this.schema.type
+      };
+    } else {
+      return {
+        flag: true
+      };
+    }
   }
 
   get showItem() {
@@ -86,6 +167,10 @@ export default class ElFormSchemaItem extends Vue {
 
   // component可以支持 标签名、Render语法
   get getdDynamicComponent() {
+    // console.log(this.prop)
+    // if (this.prop === "dd") {
+    //   console.log(this.schema, this.prop)
+    // }
     const component = this.schema.component;
     const cacheObj = { ...this.schema };
     this.$delete(cacheObj, "component");
@@ -114,7 +199,7 @@ export default class ElFormSchemaItem extends Vue {
               console.error(
                 `[el-form-schema] Error: Please make sure ${this.prop} field have 'options' attribute and Array type, 'options' Must contain two attributes: value and label`
               );
-              return null;
+              return "el-" + component;
             }
             // 给input这类字符串，添加上el-的前缀
             return "el-" + component;
@@ -132,7 +217,7 @@ export default class ElFormSchemaItem extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.el-schema-form-item {
-  // width: 100%;
-}
+// .el-schema-form-item {
+//   // width: 100%;
+// }
 </style>

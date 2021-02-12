@@ -15,7 +15,7 @@ export interface Item {
   component: string | Render;
   rules?: object[] | object;
   config?: object;
-  children?: object;
+  items?: object; // type === "object" || type === "array" 时必填
   dynamicProps?: object;
   componentSlot?: object;
 }

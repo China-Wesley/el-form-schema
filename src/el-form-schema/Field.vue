@@ -6,10 +6,11 @@
         dynamicComponent === 'el-plain-text' &&
           (schema.visible ? schema.visible : true)
       "
+      :ref="prop"
       v-bind="schema.field"
       v-on="getEventsName"
     >
-      {{ String(model[prop]) }}
+      {{ String(gobleModel[prop]) }}
     </span>
 
     <!-- 按钮 -->
@@ -30,7 +31,8 @@
     <!-- 链接 -->
     <template v-else-if="dynamicComponent === 'el-link'">
       <el-link
-        :href="model[prop]"
+        :href="gobleModel[prop]"
+        :ref="prop"
         v-bind="schema.field"
         :disabled="schema.disabled"
         v-on="getEventsName"
@@ -41,7 +43,7 @@
           </span>
           <component v-else :is="schema.field.inner"></component>
         </template>
-        <span v-else>{{ model[prop] }}</span>
+        <span v-else>{{ gobleModel[prop] }}</span>
       </el-link>
     </template>
 
@@ -51,9 +53,10 @@
         (dynamicComponent === 'el-input' || !schema.component) &&
           schema.type === 'number'
       "
+      :ref="prop"
       :is="dynamicComponent"
       :disabled="schema.disabled"
-      v-model.number="model[prop]"
+      v-model.number="targetModel[targetProp]"
       v-bind="$attrs"
       v-on="getEventsName"
     >
@@ -75,6 +78,7 @@
         v-bind="schema.field"
         :disabled="schema.disabled"
         v-on="getEventsName"
+        :ref="prop"
       >
         <template v-if="schema.field.drag">
           <i class="el-icon-upload"></i>
@@ -106,9 +110,10 @@
       v-else-if="
         dynamicComponent === 'el-radio-group' || dynamicComponent === 'el-radio'
       "
+      :ref="prop"
       :disabled="schema.disabled"
       v-bind="schema.field"
-      v-model="model[prop]"
+      v-model="targetModel[targetProp]"
       v-on="getEventsName"
     >
       <!-- 将 opt 的 value 属性传递给 label，label 属性只做展示，这里的用法与 element-ui 有一些区别，element-ui 的 label 为选中状态的值 -->
@@ -129,9 +134,10 @@
         dynamicComponent === 'el-checkbox-group' ||
           dynamicComponent === 'el-checkbox'
       "
+      :ref="prop"
       :disabled="schema.disabled"
       v-bind="schema.field"
-      v-model="model[prop]"
+      v-model="targetModel[targetProp]"
       v-on="getEventsName"
     >
       <component
@@ -148,9 +154,10 @@
     <!-- 选择器 -->
     <el-select
       v-else-if="dynamicComponent === 'el-select'"
+      :ref="prop"
       :disabled="schema.disabled"
       v-bind="schema.field"
-      v-model="model[prop]"
+      v-model="targetModel[targetProp]"
       v-on="getEventsName"
     >
       <el-option
@@ -195,10 +202,11 @@
     <!-- common component -->
     <component
       v-else
+      :ref="prop"
       :is="dynamicComponent"
       :disabled="schema.disabled"
-      v-_model:[schema.type]="model[prop]"
-      v-model="model[prop]"
+      v-_model:[schema.type]="gobleModel[prop]"
+      v-model="targetModel[targetProp]"
       v-bind="$attrs"
       v-on="getEventsName"
     >
@@ -231,7 +239,8 @@
 import * as _ from "lodash";
 /* @ts-ignore */
 import CommonSlot from "./CommonSlot.vue";
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Component, Prop, Inject } from "vue-property-decorator";
+import { Item, Schema } from "./util/interface";
 
 @Component({
   name: "Field",
@@ -241,10 +250,34 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 })
 export default class Field extends Vue {
   @Prop({ required: true }) dynamicComponent!: object;
-  @Prop({ required: true }) model!: object;
   @Prop({ required: true }) prop!: string;
+  @Prop({ required: false }) model!: object;
   @Prop({ required: true }) schema!: object;
+  @Prop({ required: false }) parentSchema!: Item | Schema;
   @Prop({ required: false, default: false }) disabled!: object;
+
+  @Inject()
+  cacheProp!: string[];
+
+  @Inject()
+  gobleModel!: object;
+
+  @Inject()
+  fieldModel!: any;
+
+  @Inject()
+  gobleSchema!: any;
+
+  @Inject()
+  totalRefs!: any[];
+
+  created() {
+    this._exposeRef();
+    // console.log(this.$refs)
+  }
+
+  private targetModel = this.fieldModel.targetModel;
+  private targetProp: any = this.fieldModel.targetProp;
 
   // 事件名两种形式: 小驼峰、小短线都可以
   get getEventsName() {
@@ -259,6 +292,10 @@ export default class Field extends Vue {
       );
     });
     return cacheObj;
+  }
+
+  private _exposeRef() {
+    this.totalRefs.push(this.$refs);
   }
 }
 </script>
