@@ -5,8 +5,12 @@
     :prop="prop"
     :rules="schema.rules"
     :label="isLabelString ? schema.label : ''"
-    :style="`width: ${schema.width}; height: ${schema.height}`"
-    :class="`el-schema-form-item-${prop}`"
+    :style="
+      `width: ${schema.width}; height: ${schema.height}; border: ${
+        schema.border ? '1px solid #e4e7ed;' : ''
+      }`
+    "
+    :class="`el-schema-form-item-${prop} el-schema-form-item`"
     v-bind="schema.config"
   >
     <!-- label -->
@@ -59,31 +63,33 @@
           :labelSuffix="labelSuffix"
         ></el-form-schema-item>
       </template>
-      <common-button
-        v-if="schema.addable === undefined ? true : schema.addable"
-        :config="
-          schema.addButton
-            ? schema.addButton
-            : {
-                inner: '增加'
-              }
-        "
-        :prop="`addButton${prop}`"
-        @click="_handleAddButton"
-      ></common-button>
-      <!-- 自由度放开 :disabled="getArrayModel.targetModel.length <= 1" -->
-      <common-button
-        v-if="schema.removeAble === undefined ? true : schema.removeAble"
-        :config="
-          schema.removeButton
-            ? schema.removeButton
-            : {
-                inner: '删除'
-              }
-        "
-        :prop="`removeAble${prop}`"
-        @click="_handleRemoveButton"
-      ></common-button>
+      <div :class="`${prop} array-item-button-wrap`">
+        <common-button
+          v-if="schema.addable === undefined ? true : schema.addable"
+          :config="
+            schema.addButton
+              ? schema.addButton
+              : {
+                  inner: '增加'
+                }
+          "
+          :prop="`addButton${prop}`"
+          @click="_handleAddButton"
+        ></common-button>
+        <!-- 自由度放开 :disabled="getArrayModel.targetModel.length <= 1" -->
+        <common-button
+          v-if="schema.removeAble === undefined ? true : schema.removeAble"
+          :config="
+            schema.removeButton
+              ? schema.removeButton
+              : {
+                  inner: '删除'
+                }
+          "
+          :prop="`removeAble${prop}`"
+          @click="_handleRemoveButton"
+        ></common-button>
+      </div>
     </template>
   </el-form-item>
 </template>
@@ -262,7 +268,18 @@ export default class ElFormSchemaItem extends Vue {
 </script>
 
 <style lang="scss" scoped>
-// .el-schema-form-item {
-//   // width: 100%;
-// }
+.el-form-schema-border {
+  border: 1px solid #e4e7ed;
+}
+.el-schema-form-item {
+  box-sizing: border-box;
+  padding: 5px;
+  width: 100%;
+}
+.array-item-button-wrap {
+  text-align: right;
+  .el-button {
+    display: inline-block;
+  }
+}
 </style>

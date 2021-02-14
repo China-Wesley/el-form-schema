@@ -4,26 +4,56 @@
     v-if="showForm"
     :model="model"
     v-bind="schema.config"
-    class="el-form-schema"
+    :class="{
+      'el-form-schema': true,
+      'el-form-schema-border': schema.border
+    }"
     v-on="$listeners"
     @validate="_handleValidate"
   >
     <!-- form-item -->
-    <template>
-      <el-form-schema-item
-        v-for="(innerSchema, prop) in schema.items"
-        :parent-schema="schema"
-        :ref="prop"
-        :schema="innerSchema"
-        :model="model"
-        :key="prop"
-        :prop="prop"
-        :labelSuffix="labelSuffix"
-        @add-field="_handleAdd"
-        @remove-field="_handleRemove"
+    <h2>{{ schema.title }}</h2>
+    <template v-for="(rowItem, rowIndex) in innerLayout">
+      <div
+        :class="{
+          'el-form-schema-inner': true,
+          'el-form-schema-border': schema.border
+        }"
+        :key="rowIndex"
       >
-      </el-form-schema-item>
+        <h3 v-if="rowItem.title" class="el-form-shcema-row-title">
+          {{ rowItem.title }}
+        </h3>
+        <el-row v-bind="{ gutter: 0, ...rowItem.rowAttres }">
+          <el-col
+            v-for="(colItem, colIndex) in rowItem.col"
+            :key="colIndex"
+            v-bind="{ span: 24, ...colItem.colAttrs }"
+          >
+            <h4 v-if="colItem.title" class="el-schema-form-col-title">
+              {{ colItem.title }}
+            </h4>
+            <template v-if="_colHasFields(colItem)">
+              <el-form-schema-item
+                v-for="(innerSchema, prop) in _filterFields(colItem.fields)
+                  .items"
+                :parent-schema="schema"
+                :ref="prop"
+                :schema="innerSchema"
+                :model="model"
+                :key="prop"
+                :prop="prop"
+                :labelSuffix="labelSuffix"
+                @add-field="_handleAdd"
+                @remove-field="_handleRemove"
+              >
+              </el-form-schema-item>
+            </template>
+          </el-col>
+        </el-row>
+      </div>
     </template>
+
     <!-- slot -->
     <slot></slot>
     <!-- button -->
@@ -38,20 +68,20 @@
     >
       <common-button
         v-if="showButton.button || showButton.resetButton"
-        :config="resetButtonConfig"
+        :config="{ ...resetButtonConfig, ...commonButtonConfig }"
         prop="resetButton"
         @click="_reset"
       ></common-button>
       <common-button
         v-if="showButton.button || showButton.cancelButton"
-        :config="cancelButtonConfig"
+        :config="{ ...cancelButtonConfig, ...commonButtonConfig }"
         prop="cancelButton"
         @click="$emit('cancel')"
       >
       </common-button>
       <common-button
         v-if="showButton.button || showButton.submitButton"
-        :config="submitButtonConfig"
+        :config="{ ...submitButtonConfig, ...commonButtonConfig }"
         prop="submitButton"
         @click="_submit"
       >
@@ -66,7 +96,12 @@ import ElFormSchemaItem from "./Item";
 /* @ts-ignore */
 import CommonButton from "./Button";
 import _ from "lodash";
-import { isEmptyObject, hasOwnProperty, removeAttr } from "./util/index";
+import {
+  isEmptyObject,
+  hasOwnProperty,
+  removeAttr,
+  hasDuplicates
+} from "./util/index";
 import { Schema } from "./util/interface";
 import { Vue, Component, Prop, Provide } from "vue-property-decorator";
 
@@ -80,7 +115,7 @@ import { Vue, Component, Prop, Provide } from "vue-property-decorator";
 export default class ElFoemSchema extends Vue {
   @Prop({ required: true }) schema!: Schema;
   @Prop({ required: true }) model!: object;
-  @Prop({ required: false }) layout!: object;
+  @Prop({ required: false }) layout!: any[];
   @Prop({ required: false, default: false }) cancelButton!: boolean | string;
   @Prop({ required: false, default: false }) submitButton!: boolean | string;
   @Prop({ required: false, default: false }) resetButton!: boolean | string;
@@ -120,6 +155,13 @@ export default class ElFoemSchema extends Vue {
     (this.schema.buttonConfig as any).resetButton) || {
     inner: "重置"
   };
+  private commonButtonConfig =
+    (this.schema.buttonConfig as any) &&
+    (this.schema.buttonConfig as any).common;
+
+  mounted() {
+    console.log(this._filterFields(["date"]));
+  }
 
   /* schema为空或不存在都不显示el-form */
   get showForm() {
@@ -143,6 +185,49 @@ export default class ElFoemSchema extends Vue {
       submitButton: submitButton === "" ? true : submitButton,
       resetButton: resetButton === "" ? true : resetButton
     };
+  }
+
+  /* 布局配置只针对一级items,嵌套无效 */
+  get innerLayout() {
+    if (!this.layout || (this.layout as any).length === 0) {
+      const fields: any[] = [];
+
+      _.forIn(this.schema.items, (value, prop) => fields.push(prop));
+
+      return [
+        // row config
+        // 默认只有一行
+        {
+          // title: '',
+          // rowAttrs: {},
+          // col config
+          // 默认只有一列，且当前列拥有所有的表单项
+          col: [
+            {
+              // title: '',
+              colAttrs: {
+                span: 24
+              },
+              fields: fields
+            }
+          ]
+        }
+      ];
+    }
+
+    let fields: any[] = [];
+
+    this.layout.forEach(row => {
+      row.col.forEach((item: any) => {
+        fields = [...fields, ...item.fields];
+      });
+    });
+
+    if (hasDuplicates(fields)) {
+      throw new Error(`请检查 layout 的 fields，存在重复使用的情况，${fields}`);
+    }
+
+    return this.layout;
   }
 
   // 这个form配置特殊，因为label重写了
@@ -246,6 +331,32 @@ export default class ElFoemSchema extends Vue {
     //
   }
 
+  private _colHasFields(col: {
+    fields: string[];
+    title: string;
+    colAttrs: {};
+  }) {
+    return col && col.fields && col.fields.length > 0;
+  }
+
+  private _filterFields(fields: any[]) {
+    const newFields = {};
+    const cloneFields = _.cloneDeep(this.schema.items);
+    // console.log(this.schema, '这里是')
+    if (Array.isArray(fields) && fields.length > 0) {
+      _.each(fields, prop => {
+        if ((cloneFields as any)[prop]) {
+          (newFields as any)[prop] = (cloneFields as any)[prop];
+        }
+      });
+    }
+
+    return {
+      ...this.schema,
+      items: newFields
+    };
+  }
+
   private _submit() {
     this.validate((valid: any) => {
       if (valid) {
@@ -257,7 +368,9 @@ export default class ElFoemSchema extends Vue {
   private _reset() {
     this.resetFields();
     this.clearValidate();
-    this.$emit("reset");
+    this.$nextTick(() => {
+      this.$emit("reset");
+    });
   }
 
   private _handleAdd(schema: object, model: any, prop: any) {
@@ -294,4 +407,25 @@ export default class ElFoemSchema extends Vue {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.el-form-schema {
+  box-sizing: border-box;
+}
+.el-form-schema-border {
+  border: 1px solid #e4e7ed;
+}
+.el-form-schema {
+  padding: 15px;
+  .el-form-schema-inner {
+    padding: 15px;
+    // border: 1px solid #e4e7ed;
+  }
+}
+.el-form-schema-button-wrap {
+  width: 100%;
+  text-align: right;
+  .el-button {
+    display: inline-block;
+  }
+}
+</style>

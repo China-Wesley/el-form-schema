@@ -41,11 +41,11 @@ export function usePropFindValue(obj: any, targetKey: any) {
 export function findAttributeFromObject(
   obj: any,
   floorProp: any,
-  gobleSchema: any
+  globalSchema: any
 ) {
   if (obj[floorProp] && typeof obj[floorProp] === "object") {
     if (obj[floorProp] instanceof Array) {
-      const _schema = usePropFindValue(gobleSchema, floorProp);
+      const _schema = usePropFindValue(globalSchema, floorProp);
       if (!_schema.type) {
         return obj;
       }
@@ -62,7 +62,7 @@ export function findAttributeFromObject(
 export function getMatchFieldModel(
   prop: string,
   originModel?: any,
-  gobleSchema?: any
+  globalSchema?: any
 ) {
   let targetModelLevel = originModel;
   let targetProp = "";
@@ -74,7 +74,7 @@ export function getMatchFieldModel(
     targetModelLevel = findAttributeFromObject(
       targetModelLevel,
       floorProp,
-      gobleSchema
+      globalSchema
     );
   });
   return {
@@ -99,3 +99,10 @@ export function removeAttr(obj: any, pick: string | any[]) {
   }
   return _.pick(obj, keys);
 }
+
+/* 检测是数组是否有重复 */
+export const hasDuplicates = (array: any[]) => {
+  return array.some((elt, index) => {
+    return array.indexOf(elt) !== index;
+  });
+};

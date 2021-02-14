@@ -1,5 +1,5 @@
 <template>
-  <div :class="`el-form-schema-field-wrap-${prop}`">
+  <div :class="`el-form-schema-field-wrap-${prop} el-form-schema-field`">
     <!-- 纯字符串 -->
     <span
       v-if="
@@ -310,4 +310,7 @@ export default class Field extends Vue {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+// .el-form-schema-field{
+// }
+</style>

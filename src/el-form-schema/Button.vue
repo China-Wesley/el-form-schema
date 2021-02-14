@@ -35,7 +35,7 @@
 
 <script lang="ts">
 /* @ts-ignore */
-import _ from "lodash";
+// import _ from "lodash";
 import { Vue, Component, Prop } from "vue-property-decorator";
 
 @Component({

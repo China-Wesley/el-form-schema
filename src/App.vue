@@ -7,6 +7,7 @@
       cancel-button
       submit-button
       reset-button
+      :layout="layout"
       @cancel="cancelHand"
       @submit="submitHand"
       @reset="resetHand"
@@ -105,15 +106,20 @@ export default {
     schema() {
       return {
         title: "这是一个标题",
+        border: true,
         config: {
-          inline: true,
+          // inline: true,
           labelSuffix: ":",
           // labelWidth: "120px",
           hideRequiredAsterisk: false,
-          labelPosition: "left",
+          labelPosition: "top",
           statusIcon: true
         },
         buttonConfig: {
+          common: {
+            type: "primary ",
+            size: "mini"
+          },
           cancelButton: {
             type: "danger",
             inner: "修改",
@@ -124,23 +130,23 @@ export default {
         },
         // visible: true,
         items: {
-          // name: {
-          //   label: "姓名",
-          //   component: "input",
-          //   // type: "number",
-          //   // visible: true,
-          //   // disabled: true,
-          //   field: {
-          //     placeholder: "请输入姓名",
-          //     type: "text"
-          //   },
-          //   rules: [
-          //     { required: true, message: "姓名不能为空", trigger: "blur" }
-          //   ],
-          //   config: {
-          //     labelWidth: "60px"
-          //   }
-          // },
+          name: {
+            label: "姓名",
+            component: "input",
+            // type: "number",
+            // visible: true,
+            // disabled: true,
+            field: {
+              placeholder: "请输入姓名",
+              type: "text"
+            },
+            rules: [
+              { required: true, message: "姓名不能为空", trigger: "blur" }
+            ],
+            config: {
+              labelWidth: "60px"
+            }
+          },
           // age: {
           //   label: "年龄",
           //   component: "input",
@@ -950,6 +956,7 @@ export default {
           //   }
           // },
           date: {
+            // border: true,
             label: "date",
             type: "array",
             // addable: false,
@@ -1001,27 +1008,18 @@ export default {
                   address: {
                     type: "array",
                     label: "地址",
-                    // component: "input"
+                    rules: [
+                      {
+                        required: true,
+                        message: "嵌套",
+                        trigger: "change"
+                      }
+                    ],
                     items: {
                       type: "object",
-                      // component: "input",
-                      label: "地址",
                       items: {
                         addr: {
-                          label: "地址",
-                          component: "input",
-                          // events: {
-                          //   input: (val) => {
-                          //     console.log(val, '这便是val')
-                          //   }
-                          // },
-                          rules: [
-                            {
-                              required: true,
-                              message: "嵌套",
-                              trigger: "change"
-                            }
-                          ]
+                          component: "input"
                         }
                       }
                     }
@@ -1074,6 +1072,7 @@ export default {
           basic: {
             label: "基础数据类型",
             component: "input",
+            border: "",
             events: {
               input: val => {
                 console.log(val);
@@ -1097,6 +1096,41 @@ export default {
           }
         }
       };
+    },
+    layout() {
+      return [
+        {
+          title: "行一",
+          rowAttrs: {
+            type: "flex",
+            style: "flex-wrap: wrap;"
+          },
+          col: [
+            {
+              colAttrs: {
+                span: 12
+              },
+              fields: ["date"],
+              title: "列标题一"
+            },
+            {
+              colAttrs: {
+                span: 12
+              },
+              fields: ["basic", "transfer"],
+              title: "列标题二"
+            }
+          ]
+        },
+        {
+          title: "行二",
+          col: [
+            {
+              fields: ["name"]
+            }
+          ]
+        }
+      ];
     }
   },
   mounted() {
@@ -1124,6 +1158,7 @@ export default {
     },
     resetHand() {
       console.log("reset");
+      this.model.date = [];
     },
     handleIconClick() {
       console.log("这里是input的slot的事件");
