@@ -2,7 +2,7 @@ import Vue from "vue";
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import App from "./App.vue";
-import ElFormSchema from "./el-form-schema/index";
+import ElFormSchema from "../package/index";
 
 Vue.use(ElementUI, {
   size: "medium"
