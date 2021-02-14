@@ -158,7 +158,7 @@
           <component v-else :is="opt.inner"></component>
         </template>
       </el-option>
-      <!-- select dlot -->
+      <!-- select slot -->
       <template v-if="schema.slot">
         <common-slot
           v-for="(component, slot) in schema.slot"

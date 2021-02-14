@@ -91,7 +91,7 @@ export function removeAttr(obj: any, pick: string | any[]) {
       return pick === key ? true : false;
     });
   } else {
-    pick.forEach((item, index) => {
+    pick.forEach(item => {
       _.remove(keys, key => {
         return key === item ? true : false;
       });

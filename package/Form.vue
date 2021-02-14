@@ -12,7 +12,10 @@
     @validate="_handleValidate"
   >
     <!-- form-item -->
-    <h2>{{ schema.title }}</h2>
+    <h2 v-if="schema.title" class="el-form-shcema-title">{{ schema.title }}</h2>
+    <p v-if="schema.description" class="el-form-shcema-description description">
+      {{ schema.description }}
+    </p>
     <template v-for="(rowItem, rowIndex) in innerLayout">
       <div
         :class="{
@@ -24,6 +27,12 @@
         <h3 v-if="rowItem.title" class="el-form-shcema-row-title">
           {{ rowItem.title }}
         </h3>
+        <p
+          v-if="rowItem.description"
+          class="el-form-shcema-row-description description"
+        >
+          {{ rowItem.description }}
+        </p>
         <el-row v-bind="{ gutter: 0, ...rowItem.rowAttres }">
           <el-col
             v-for="(colItem, colIndex) in rowItem.col"
@@ -33,6 +42,12 @@
             <h4 v-if="colItem.title" class="el-schema-form-col-title">
               {{ colItem.title }}
             </h4>
+            <p
+              v-if="colItem.description"
+              class="el-form-shcema-col-description description"
+            >
+              {{ colItem.description }}
+            </p>
             <template v-if="_colHasFields(colItem)">
               <el-form-schema-item
                 v-for="(innerSchema, prop) in _filterFields(colItem.fields)
@@ -158,10 +173,6 @@ export default class ElFoemSchema extends Vue {
   private commonButtonConfig =
     (this.schema.buttonConfig as any) &&
     (this.schema.buttonConfig as any).common;
-
-  mounted() {
-    console.log(this._filterFields(["date"]));
-  }
 
   /* schema为空或不存在都不显示el-form */
   get showForm() {
@@ -427,5 +438,10 @@ export default class ElFoemSchema extends Vue {
   .el-button {
     display: inline-block;
   }
+}
+.description {
+  font-size: 14px;
+  color: #5e6d82;
+  line-height: 1.5em;
 }
 </style>

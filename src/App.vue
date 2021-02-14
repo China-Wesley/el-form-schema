@@ -7,6 +7,7 @@
       cancel-button
       submit-button
       reset-button
+      button
       :layout="layout"
       @cancel="cancelHand"
       @submit="submitHand"
@@ -107,6 +108,7 @@ export default {
       return {
         title: "这是一个标题",
         border: true,
+        description: "这是一段描述xxxxxxxxxxx",
         config: {
           // inline: true,
           labelSuffix: ":",
@@ -1101,6 +1103,7 @@ export default {
       return [
         {
           title: "行一",
+          description: "这是一段描述xxxxxxxxxxx",
           rowAttrs: {
             type: "flex",
             style: "flex-wrap: wrap;"
@@ -1111,7 +1114,8 @@ export default {
                 span: 12
               },
               fields: ["date"],
-              title: "列标题一"
+              title: "列标题一",
+              description: "这是一段描述xxxxxxxxxxx"
             },
             {
               colAttrs: {
