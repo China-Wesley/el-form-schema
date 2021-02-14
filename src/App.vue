@@ -4,13 +4,22 @@
       ref="form"
       :schema="schema"
       :model="model"
+      cancel-button
+      submit-button
+      reset-button
+      @cancel="cancelHand"
+      @submit="submitHand"
+      @reset="resetHand"
       @validate="handleFunc"
+      @add="addFunc"
+      @remove="removeFunc"
     >
     </el-form-schema>
   </div>
 </template>
 
 <script>
+import _ from "lodash";
 // import { component } from 'node_modules/vue/types/umd';
 // import Select from "./views/select";
 // import Input from "./views/Input";
@@ -44,7 +53,7 @@ export default {
     return {
       id: 0,
       model: {
-        // name: "",
+        // name: "1",
         // age: "",
         // home: "",
         // text: "这里是纯字符串",
@@ -59,14 +68,14 @@ export default {
         // cascader: "",
         // cascaderPanel: "",
         // switch: "",
-        date: [1, 2, 3],
+        date: [],
         transfer: {
           name: "name",
           home: {
             address: [{ addr: "1" }, { addr: "1" }],
             parents: {
-              father: 100,
-              mather: 100
+              father: undefined,
+              mather: undefined
             },
             flowers: []
           }
@@ -104,6 +113,15 @@ export default {
           labelPosition: "left",
           statusIcon: true
         },
+        buttonConfig: {
+          cancelButton: {
+            type: "danger",
+            inner: "修改",
+            disabled: true
+          }
+          // submitButton: {}
+          // arryType
+        },
         // visible: true,
         items: {
           // name: {
@@ -121,37 +139,6 @@ export default {
           //   ],
           //   config: {
           //     labelWidth: "60px"
-          //   },
-          //   children: {
-          //     originName: {
-          //       label: "原名",
-          //       component: "el-select",
-          //       field: {
-          //         placeholder: "请输入姓名",
-          //         type: "text"
-          //       },
-          //       rules: [
-          //         { required: true, message: "姓名不能为空", trigger: "blur" }
-          //       ]
-          //     },
-          //     children: {
-          //       a: {
-          //         label: "123",
-          //         component: "el-switch"
-          //       },
-          //       parentName: {
-          //         //   label: "亲人姓名",
-          //         component: "el-input"
-          //         //   field: {
-          //         //     placeholder: "请输入姓名",
-          //         //     type: "text"
-          //         //   },
-          //         //   rules: [
-          //         //     { required: true, message: "姓名不能为空", trigger: "blur" }
-          //         //   ]
-          //       }
-          //     }
-          //     //   }
           //   }
           // },
           // age: {
@@ -215,7 +202,7 @@ export default {
           //     { required: true, message: "请选择动态组件" },
           //     { type: "number", message: "请输入数字" }
           //   ],
-          //   componentSlot: {
+          //   slot: {
           //     suffix: {
           //       render: () => {
           //         return (
@@ -300,7 +287,7 @@ export default {
           //     }
           //     // listType: "picture-card",
           //   },
-          //   componentSlot: {
+          //   slot: {
           //     tip: "上传的文件不要大于500KB"
           //     // trigger: '123'
           //   }
@@ -375,7 +362,7 @@ export default {
           //       }
           //     ]
           //   },
-          //   componentSlot: {
+          //   slot: {
           //     // defaultSlot: '123',
           //     // prefix: '123'
           //   }
@@ -965,10 +952,23 @@ export default {
           date: {
             label: "date",
             type: "array",
+            // addable: false,
+            // addButton: {
+            //   // type: "danger",
+            //   // inner: "增加"
+            // },
+            removeButton: {
+              inner: "删除1",
+              disabled: false
+            },
             items: {
               // 或者[{},{}]这种形式
               label: "date",
-              component: "input"
+              component: "input",
+              rules: [
+                { required: true, message: "年龄不能为空", trigger: "change" },
+                { type: "number", message: "请输入数字", trigger: "change" }
+              ]
               // type: "object",
               // items: {
               //   name: {
@@ -990,7 +990,10 @@ export default {
             items: {
               name: {
                 label: "name",
-                component: "input"
+                component: "input",
+                rules: [
+                  { required: true, message: "年龄不能为空", trigger: "change" }
+                ]
               },
               home: {
                 type: "object",
@@ -1004,7 +1007,22 @@ export default {
                       // component: "input",
                       label: "地址",
                       items: {
-                        addr: { label: "地址", component: "input" }
+                        addr: {
+                          label: "地址",
+                          component: "input",
+                          // events: {
+                          //   input: (val) => {
+                          //     console.log(val, '这便是val')
+                          //   }
+                          // },
+                          rules: [
+                            {
+                              required: true,
+                              message: "嵌套",
+                              trigger: "change"
+                            }
+                          ]
+                        }
                       }
                     }
                   },
@@ -1013,11 +1031,17 @@ export default {
                     items: {
                       father: {
                         label: "father",
-                        component: "input"
+                        component: "input",
+                        rules: [
+                          { required: true, message: "嵌套", trigger: "change" }
+                        ]
                       },
                       mather: {
                         label: "mather",
-                        component: "slider"
+                        component: "slider",
+                        rules: [
+                          { required: true, message: "嵌套", trigger: "change" }
+                        ]
                       }
                     }
                   },
@@ -1025,6 +1049,9 @@ export default {
                     label: "flowers",
                     component: "select",
                     // type: "array",
+                    rules: [
+                      { required: true, message: "嵌套", trigger: "change" }
+                    ],
                     field: {
                       // 对整个radioGroup
                       multiple: true,
@@ -1047,6 +1074,12 @@ export default {
           basic: {
             label: "基础数据类型",
             component: "input",
+            events: {
+              input: val => {
+                console.log(val);
+              }
+            },
+            rules: [{ required: true, message: "嵌套", trigger: "change" }],
             field: {
               // 对整个radioGroup
               // multiple: true,
@@ -1068,14 +1101,46 @@ export default {
   },
   mounted() {
     // console.log(this.$refs.form);
-    console.log(this.$refs.form.getRef("basic"));
+    // this.$refs.form.validate((flag, obj) => {
+    //   console.log(flag, obj, "这里是validate");
+    // });
+    const arr = [
+      { required: true, message: "年龄不能为空", trigger: "change" },
+      { type: "number", message: "请输入数字", trigger: "change" }
+    ];
+    console.log(_.findKey(arr, "a"));
+    this.$refs.form.validateField("basic", err => {
+      console.log(111111);
+      console.log(err, ">>>>>");
+    });
+    // console.log(this.$refs.form.getRef("addr", "field"), "---");
   },
   methods: {
+    cancelHand() {
+      console.log("cancel");
+    },
+    submitHand() {
+      console.log("submit");
+    },
+    resetHand() {
+      console.log("reset");
+    },
     handleIconClick() {
       console.log("这里是input的slot的事件");
     },
     handleFunc() {
-      console.log("事件触发了");
+      // console.log("validate", prop, isPass, obj);
+    },
+    addFunc(prop, model, schema) {
+      console.log(schema, prop, model);
+      // model.push(1)
+      // const res = this.$refs.form._get(this.model, prop);
+      // console.log(res.push(1));
+    },
+    removeFunc(prop, model, schema) {
+      console.log(schema, prop, model);
+      // const res = this.$refs.form._get(this.model, prop);
+      // res.pop();
     }
   }
 };

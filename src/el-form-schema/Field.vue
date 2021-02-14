@@ -13,21 +13,6 @@
       {{ String(gobleModel[prop]) }}
     </span>
 
-    <!-- 按钮 -->
-    <!-- <el-button
-      v-else-if="dynamicComponent === 'el-button'"
-      v-bind="schema.field"
-      :disabled="schema.disabled"
-    >
-      <template v-if="schema.field && schema.field.inner">
-        <span v-if="typeof schema.field.inner === 'string'">
-          {{ schema.field.inner }}
-        </span>
-        <component v-else :is="schema.field.inner"></component>
-      </template>
-      <span v-else>{{ model[prop] }}</span>
-    </el-button> -->
-
     <!-- 链接 -->
     <template v-else-if="dynamicComponent === 'el-link'">
       <el-link
@@ -51,7 +36,7 @@
     <component
       v-else-if="
         (dynamicComponent === 'el-input' || !schema.component) &&
-          schema.type === 'number'
+          (schema.type === 'number' || isNumberRule)
       "
       :ref="prop"
       :is="dynamicComponent"
@@ -60,9 +45,9 @@
       v-bind="$attrs"
       v-on="getEventsName"
     >
-      <template v-if="schema.componentSlot">
+      <template v-if="schema.slot">
         <common-slot
-          v-for="(component, slot) in schema.componentSlot"
+          v-for="(component, slot) in schema.slot"
           :key="slot"
           :slot="slot"
           :prop="prop"
@@ -92,9 +77,9 @@
         </template>
 
         <!-- element-slot -->
-        <template v-if="schema.componentSlot">
+        <template v-if="schema.slot">
           <common-slot
-            v-for="(component, slot) in schema.componentSlot"
+            v-for="(component, slot) in schema.slot"
             :key="slot"
             :slot="slot"
             :prop="prop"
@@ -174,9 +159,9 @@
         </template>
       </el-option>
       <!-- select dlot -->
-      <template v-if="schema.componentSlot">
+      <template v-if="schema.slot">
         <common-slot
-          v-for="(component, slot) in schema.componentSlot"
+          v-for="(component, slot) in schema.slot"
           :key="slot"
           :slot="slot"
           :prop="prop"
@@ -205,7 +190,6 @@
       :ref="prop"
       :is="dynamicComponent"
       :disabled="schema.disabled"
-      v-_model:[schema.type]="gobleModel[prop]"
       v-model="targetModel[targetProp]"
       v-bind="$attrs"
       v-on="getEventsName"
@@ -221,9 +205,9 @@
         ></component>
       </template>
       <!-- 具名的slot 可能有多个 -->
-      <template v-if="schema.componentSlot">
+      <template v-if="schema.slot">
         <common-slot
-          v-for="(component, slot) in schema.componentSlot"
+          v-for="(component, slot) in schema.slot"
           :key="slot"
           :slot="slot"
           :prop="prop"
@@ -272,12 +256,35 @@ export default class Field extends Vue {
   totalRefs!: any[];
 
   created() {
-    this._exposeRef();
     // console.log(this.$refs)
+  }
+
+  mounted() {
+    this._exposeRef();
   }
 
   private targetModel = this.fieldModel.targetModel;
   private targetProp: any = this.fieldModel.targetProp;
+
+  get isNumberRule() {
+    let flag = false;
+    if ((this.schema as any).rules instanceof Array) {
+      (this.schema as any).rules.forEach((item: any) => {
+        _.forIn(item, (item, prop) => {
+          if (prop === "type") {
+            item === "number" ? (flag = true) : (flag = false);
+          }
+        });
+      });
+    } else {
+      _.forIn((this.schema as any).rules, (item, prop) => {
+        if (prop === "type") {
+          item === "number" ? (flag = true) : (flag = false);
+        }
+      });
+    }
+    return flag;
+  }
 
   // 事件名两种形式: 小驼峰、小短线都可以
   get getEventsName() {
@@ -294,8 +301,11 @@ export default class Field extends Vue {
     return cacheObj;
   }
 
+  // 暴露ref
   private _exposeRef() {
-    this.totalRefs.push(this.$refs);
+    _.forIn(this.$refs, (item, prop) => {
+      this.$set(this.totalRefs, prop, item);
+    });
   }
 }
 </script>

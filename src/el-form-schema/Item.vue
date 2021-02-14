@@ -1,5 +1,6 @@
 <template>
   <el-form-item
+    :ref="`${prop}_wzw_item`"
     v-if="showItem"
     :prop="prop"
     :rules="schema.rules"
@@ -37,7 +38,7 @@
         v-for="(innerSchema, _prop) in schema.items"
         :ref="prop"
         :key="_prop"
-        :prop="`${prop}_wzw_object_split_${_prop}`"
+        :prop="`${prop}.${_prop}`"
         :schema="innerSchema"
         :parent-schema="schema"
         :labelSuffix="labelSuffix"
@@ -49,30 +50,40 @@
       <template v-if="getArrayModel.targetModel.length !== 0">
         <el-form-schema-item
           v-for="(item, index) in getArrayModel.targetModel"
-          :key="
-            `${prop
-              .replace(/_wzw_object_split_/g, '.')
-              .replace(/_wzw_array_split_/g, '_')}_${index}`
-          "
+          :key="`${prop.replace(/\./g, '.').replace(/\[\]/g, '_')}[${index}]`"
           :ref="prop"
-          :prop="`${prop}_wzw_array_split_${'_wzw_array_index_' + index}`"
+          :prop="`${prop}[${index}]`"
           :model="model"
           :schema="schema.items"
           :parent-schema="schema"
           :labelSuffix="labelSuffix"
         ></el-form-schema-item>
       </template>
-      <template v-else>
-        <el-form-schema-item
-          :ref="prop"
-          :prop="`${prop}${'_wzw_array_index_0'}`"
-          :model="model"
-          :schema="schema.items"
-          :parent-schema="schema"
-          :labelSuffix="labelSuffix"
-        ></el-form-schema-item>
-      </template>
-      <el-button>增加</el-button>
+      <common-button
+        v-if="schema.addable === undefined ? true : schema.addable"
+        :config="
+          schema.addButton
+            ? schema.addButton
+            : {
+                inner: '增加'
+              }
+        "
+        :prop="`addButton${prop}`"
+        @click="_handleAddButton"
+      ></common-button>
+      <!-- 自由度放开 :disabled="getArrayModel.targetModel.length <= 1" -->
+      <common-button
+        v-if="schema.removeAble === undefined ? true : schema.removeAble"
+        :config="
+          schema.removeButton
+            ? schema.removeButton
+            : {
+                inner: '删除'
+              }
+        "
+        :prop="`removeAble${prop}`"
+        @click="_handleRemoveButton"
+      ></common-button>
     </template>
   </el-form-item>
 </template>
@@ -80,6 +91,9 @@
 <script lang="ts">
 /* @ts-ignore */
 import Field from "./Field";
+/* @ts-ignore */
+import CommonButton from "./Button";
+import _ from "lodash";
 import {
   isEmptyObject,
   hasOwnProperty,
@@ -92,7 +106,8 @@ import { Vue, Component, Prop, Inject, Provide } from "vue-property-decorator";
 @Component({
   name: "ElFormSchemaItem",
   components: {
-    Field
+    Field,
+    CommonButton
   }
 })
 export default class ElFormSchemaItem extends Vue {
@@ -108,15 +123,20 @@ export default class ElFormSchemaItem extends Vue {
   @Inject()
   gobleSchema!: object;
 
+  @Inject()
+  totalItemRefs!: any;
+
   @Provide()
   fieldModel = this.getArrayModel;
 
-  mounted() {
-    // this.stratifiedProp(this.prop);
-  }
+  @Inject()
+  addField!: Function;
 
-  created() {
-    // this.isNomalArrayItem();
+  @Inject()
+  removeField!: Function;
+
+  mounted() {
+    this._exposeRef();
   }
 
   get getArrayModel() {
@@ -212,6 +232,31 @@ export default class ElFormSchemaItem extends Vue {
       }
     }
     return "el-input";
+  }
+
+  // 暴露ref
+  private _exposeRef() {
+    _.forIn(this.$refs, (item: any, prop: any) => {
+      if (prop.includes("_wzw_item")) {
+        this.$set(this.totalItemRefs, prop, item);
+      }
+    });
+  }
+
+  private _handleAddButton() {
+    this.addField(
+      this.schema,
+      _.get(this.gobleModel, this.prop, this.gobleModel),
+      this.prop
+    );
+  }
+
+  private _handleRemoveButton() {
+    this.removeField(
+      this.schema,
+      _.get(this.gobleModel, this.prop, this.gobleModel),
+      this.prop
+    );
   }
 }
 </script>

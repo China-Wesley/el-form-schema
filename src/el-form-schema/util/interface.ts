@@ -5,6 +5,7 @@ export interface Schema {
   config?: object;
   visible?: boolean;
   items: object;
+  buttonConfig?: object;
 }
 
 export interface Item {
@@ -13,13 +14,20 @@ export interface Item {
   type?: string;
   disabled?: boolean;
   component: string | Render;
+  events?: object;
   rules?: object[] | object;
   config?: object;
   items?: object; // type === "object" || type === "array" 时必填
   dynamicProps?: object;
-  componentSlot?: object;
+  slot?: object;
 }
 
 export interface Render {
   (h?: any, context?: any): VNode | string;
+}
+
+interface ButtonConfig {
+  cancelButton?: object;
+  submitButton?: object;
+  resetButton?: object;
 }

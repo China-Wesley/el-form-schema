@@ -16,18 +16,8 @@ export function checkStringHaveHtml(str: string) {
   return reg.test(str);
 }
 
-/* 检测数组重复元素的个数 */
-// export function arrRepeatNum(arr: any[], ele: any) {
-//   let count = 0;
-//   _.forEach(arr, (item, index) => {
-//     if (item === ele) {
-//       count++
-//     }
-//   })
-//   return count
-// }
+/* 映射model */
 let cache: any = "";
-
 function findProp(obj: any, targetKey: any) {
   _.forIn(obj, (item, prop) => {
     if (prop !== targetKey) {
@@ -76,11 +66,9 @@ export function getMatchFieldModel(
 ) {
   let targetModelLevel = originModel;
   let targetProp = "";
-  const propLevel: any = prop
-    .split(/_wzw_object_split_|_wzw_array_split_|_wzw_array_index_/g)
-    .filter(item => {
-      return item === "" ? false : item;
-    });
+  const propLevel: any = prop.split(/\.|\[|\]/g).filter(item => {
+    return item === "" ? false : item;
+  });
   targetProp = propLevel[propLevel.length - 1];
   propLevel.forEach((floorProp: any) => {
     targetModelLevel = findAttributeFromObject(
@@ -93,4 +81,21 @@ export function getMatchFieldModel(
     targetModel: targetModelLevel,
     targetProp: targetProp
   };
+}
+
+/* 筛除对象中的一条或多条属性属性 */
+export function removeAttr(obj: any, pick: string | any[]) {
+  const keys: any = Object.keys(obj);
+  if (typeof pick === "string") {
+    _.remove(keys, key => {
+      return pick === key ? true : false;
+    });
+  } else {
+    pick.forEach((item, index) => {
+      _.remove(keys, key => {
+        return key === item ? true : false;
+      });
+    });
+  }
+  return _.pick(obj, keys);
 }
