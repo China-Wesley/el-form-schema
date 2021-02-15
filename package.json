@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name el-schema-form package/index.ts",
+    "build": "vue-cli-service build --target lib --name el-form-schema package/index.ts",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "docs:dev": "vuepress dev docs",
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@types/lodash": "^4.14.168",
-    "core-js": "^3.6.5",
+    "core-js": "3",
     "element-ui": "^2.15.0",
     "lodash": "^4.17.20",
     "vue": "^2.6.11",
@@ -37,6 +37,7 @@
     "@vue/test-utils": "^1.0.3",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
+    "core-js": "^3.8.3",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-vue": "^6.2.2",
@@ -48,7 +49,8 @@
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
     "vue-template-compiler": "^2.6.11",
-    "vuepress": "^1.8.1"
+    "vuepress": "^1.8.1",
+    "watchpack": "^2.1.1"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

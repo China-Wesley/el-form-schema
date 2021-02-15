@@ -2,13 +2,13 @@
   <div id="app">
     <el-form-schema
       ref="form"
-      :schema="schema"
-      :model="model"
+      :schema="schema111"
+      :model="model111"
       cancel-button
       submit-button
       reset-button
       button
-      :layout="layout"
+      :layout="layout111"
       @cancel="cancelHand"
       @submit="submitHand"
       @reset="resetHand"
@@ -22,6 +22,9 @@
 
 <script>
 import _ from "lodash";
+import model111 from "../docs/.vuepress/components/normal_model.json";
+import schema111 from "../docs/.vuepress/components/normal_schema.json";
+import layout111 from "../docs/.vuepress/components/normal_layout.json";
 // import { component } from 'node_modules/vue/types/umd';
 // import Select from "./views/select";
 // import Input from "./views/Input";
@@ -54,6 +57,9 @@ export default {
   data() {
     return {
       id: 0,
+      model111,
+      schema111,
+      layout111,
       model: {
         // name: "1",
         // age: "",

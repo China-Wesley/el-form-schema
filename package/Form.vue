@@ -171,8 +171,9 @@ export default class ElFoemSchema extends Vue {
     inner: "重置"
   };
   private commonButtonConfig =
-    (this.schema.buttonConfig as any) &&
-    (this.schema.buttonConfig as any).common;
+    ((this.schema.buttonConfig as any) &&
+      (this.schema.buttonConfig as any).common) ||
+    {};
 
   /* schema为空或不存在都不显示el-form */
   get showForm() {
@@ -229,9 +230,13 @@ export default class ElFoemSchema extends Vue {
     let fields: any[] = [];
 
     this.layout.forEach(row => {
-      row.col.forEach((item: any) => {
-        fields = [...fields, ...item.fields];
-      });
+      if (row.col) {
+        row.col.forEach((item: any) => {
+          if (item.fields) {
+            fields = [...fields, ...item.fields];
+          }
+        });
+      }
     });
 
     if (hasDuplicates(fields)) {
@@ -435,6 +440,7 @@ export default class ElFoemSchema extends Vue {
 .el-form-schema-button-wrap {
   width: 100%;
   text-align: right;
+  padding: 15px 0;
   .el-button {
     display: inline-block;
   }

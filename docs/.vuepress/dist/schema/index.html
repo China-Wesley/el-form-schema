@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>数据结构 | El Form Schema</title>
+    <meta name="generator" content="VuePress 1.8.1">
+    
+    <meta name="description" content="表单自动化解决方案">
+    
+    <link rel="preload" href="/assets/css/0.styles.b2c862b9.css" as="style"><link rel="preload" href="/assets/js/app.79171cf6.js" as="script"><link rel="preload" href="/assets/js/4.0d331224.js" as="script"><link rel="preload" href="/assets/js/15.24b4ff3a.js" as="script"><link rel="prefetch" href="/assets/js/1.252f28af.js"><link rel="prefetch" href="/assets/js/10.bc386d7d.js"><link rel="prefetch" href="/assets/js/11.e3cfd349.js"><link rel="prefetch" href="/assets/js/12.8568a893.js"><link rel="prefetch" href="/assets/js/13.d4cd67e0.js"><link rel="prefetch" href="/assets/js/14.5d2edaf6.js"><link rel="prefetch" href="/assets/js/16.be035f88.js"><link rel="prefetch" href="/assets/js/17.f52e3be0.js"><link rel="prefetch" href="/assets/js/2.4852923f.js"><link rel="prefetch" href="/assets/js/5.1d59b98c.js"><link rel="prefetch" href="/assets/js/6.bfc2123a.js"><link rel="prefetch" href="/assets/js/7.6ccd2874.js"><link rel="prefetch" href="/assets/js/8.3c082c63.js"><link rel="prefetch" href="/assets/js/9.b148d862.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.b2c862b9.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">El Form Schema</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/guide/" class="nav-link">
+  文档
+</a></div><div class="nav-item"><a href="/simple/" class="nav-link">
+  案例
+</a></div><div class="nav-item"><a href="https://element.eleme.cn/#/zh-CN/component/form" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Element UI
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://github.com/China-Wesley/el-form-schema" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/guide/" class="nav-link">
+  文档
+</a></div><div class="nav-item"><a href="/simple/" class="nav-link">
+  案例
+</a></div><div class="nav-item"><a href="https://element.eleme.cn/#/zh-CN/component/form" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Element UI
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://github.com/China-Wesley/el-form-schema" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>开始</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/guide/" class="sidebar-link">快速上手</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Template</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/template/" class="sidebar-link">Template</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Schema</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/schema/" aria-current="page" class="active sidebar-link">数据结构</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/schema/#数据结构" class="sidebar-link">数据结构</a></li><li class="sidebar-sub-header"><a href="/schema/#schema" class="sidebar-link">schema</a></li><li class="sidebar-sub-header"><a href="/schema/#buttonconfig" class="sidebar-link">buttonConfig</a></li><li class="sidebar-sub-header"><a href="/schema/#items" class="sidebar-link">items</a></li><li class="sidebar-sub-header"><a href="/schema/#例子" class="sidebar-link">例子</a></li></ul></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Layout</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/layout/" class="sidebar-link">布局</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Simple</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/simple/" class="sidebar-link">样例</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h2 id="数据结构"><a href="#数据结构" class="header-anchor">#</a> 数据结构</h2> <details class="custom-block details"><summary>点击查看代码</summary> <div class="language-js extra-class"><pre class="language-js"><code>schema <span class="token operator">=</span> <span class="token punctuation">{</span>
+  title<span class="token operator">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">,</span> <span class="token comment">// 是整个form的标题</span>
+  border<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  config<span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token comment">// 可以配置整个表单</span>
+  description<span class="token operator">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">,</span>
+  buttonConfig<span class="token operator">:</span> <span class="token punctuation">{</span>
+    common<span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    cancelButton<span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    submitButton<span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    resetButton<span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  visible<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  items<span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token comment">// items是独一无二的</span>
+    <span class="token punctuation">[</span>prop<span class="token punctuation">]</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      label<span class="token operator">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">,</span> <span class="token comment">//item的label</span>
+      type<span class="token operator">:</span> <span class="token string">&quot;number&quot;</span> <span class="token operator">||</span> <span class="token string">&quot;array&quot;</span> <span class="token operator">||</span> <span class="token string">&quot;object&quot;</span><span class="token punctuation">,</span> <span class="token comment">// 这里是传值的类型</span>
+      component<span class="token operator">:</span> <span class="token string">&quot;&quot;</span> <span class="token operator">||</span> Function <span class="token operator">||</span> <span class="token punctuation">{</span> <span class="token function-variable function">render</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token comment">//这个可以传入自定义组件，或者固定的值如 input、select、colorPicker等</span>
+      disabled<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+      visible<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+      events<span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token comment">// 传入component item的事件</span>
+      field<span class="token operator">:</span> <span class="token punctuation">{</span>
+        option<span class="token punctuation">,</span> <span class="token comment">// [{label: &quot;&quot;, value: 1}] // option要保持这种格式</span>
+        <span class="token operator">...</span>elementFieldSet<span class="token punctuation">,</span> <span class="token comment">// element自带的表单设置</span>
+        inner<span class="token operator">:</span> <span class="token string">&quot;&quot;</span> <span class="token operator">||</span> Component <span class="token operator">||</span> <span class="token punctuation">{</span> <span class="token function-variable function">render</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token comment">// slot非具名的</span>
+        <span class="token comment">// 实际上就是传入component的配置，即form-item的各种属性</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      rules<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment">// 这里面全部都是验证规则，应该和el-form保持一致</span>
+      config<span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token comment">//单个item应该有单独的config</span>
+      children<span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+      dynamicProps<span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token comment">// 当传入的是动态组件时，这个作为动态组件的prop传入其中</span>
+      slot<span class="token operator">:</span> <span class="token punctuation">{</span>
+        tip<span class="token operator">:</span> <span class="token string">&quot;&quot;</span> <span class="token operator">||</span> <span class="token punctuation">{</span> <span class="token function-variable function">render</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token comment">// 可以循环嵌套的slot</span>
+      addable<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">// type = 'array' 时 增加和删除按钮，默认为true</span>
+      removeAble<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+      addButton<span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token comment">// 按钮的配置</span>
+      removeButton<span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+      items<span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token comment">// 可嵌套的 当type='array' || type='object'时使用，映射model的结构</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div></details> <h2 id="schema"><a href="#schema" class="header-anchor">#</a> schema</h2> <table><thead><tr><th style="text-align:center;">属性</th> <th style="text-align:center;">说明</th> <th style="text-align:center;">类型</th> <th style="text-align:center;">是否必填</th> <th style="text-align:center;">默认值</th></tr></thead> <tbody><tr><td style="text-align:center;">title</td> <td style="text-align:center;">整个 form 的标题</td> <td style="text-align:center;">string</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">description</td> <td style="text-align:center;">整个表单的描述文字</td> <td style="text-align:center;">string</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">border</td> <td style="text-align:center;">给 form 添加上 border, 单纯的添加了一个类名, 我自己都觉得鸡肋（手动滑稽）</td> <td style="text-align:center;">boolean</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">buttonConfig</td> <td style="text-align:center;">为表单的三个按钮添加配置 (详情见下文)</td> <td style="text-align:center;">object</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">visible</td> <td style="text-align:center;">控制整个表单的显示隐藏</td> <td style="text-align:center;">boolean</td> <td style="text-align:center;">否</td> <td style="text-align:center;">true</td></tr> <tr><td style="text-align:center;">items</td> <td style="text-align:center;">表单中的所有 form-item, 按照 model 的数据结构进行配置 (详情见下文)</td> <td style="text-align:center;">object</td> <td style="text-align:center;">是</td> <td style="text-align:center;">-</td></tr></tbody></table> <h2 id="buttonconfig"><a href="#buttonconfig" class="header-anchor">#</a> buttonConfig</h2> <h4 id="按钮配置与-element-相同"><a href="#按钮配置与-element-相同" class="header-anchor">#</a> 按钮配置与 Element 相同</h4> <table><thead><tr><th style="text-align:center;">属性</th> <th style="text-align:center;">说明</th> <th style="text-align:center;">类型</th> <th style="text-align:center;">是否必填</th> <th style="text-align:center;">默认值</th></tr></thead> <tbody><tr><td style="text-align:center;">common</td> <td style="text-align:center;">三个按钮的通用配置， 与 element 的配置相同</td> <td style="text-align:center;">object</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">cancelButton</td> <td style="text-align:center;">取消按钮配置</td> <td style="text-align:center;">object</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">submitButton</td> <td style="text-align:center;">提交按钮配置</td> <td style="text-align:center;">object</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">resetButton</td> <td style="text-align:center;">重置按钮配置</td> <td style="text-align:center;">object</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr></tbody></table> <h2 id="items"><a href="#items" class="header-anchor">#</a> items</h2> <h4 id="items-中每个键-值对应-model-中的字段-键名需与-model-的字段名相同"><a href="#items-中每个键-值对应-model-中的字段-键名需与-model-的字段名相同" class="header-anchor">#</a> items 中每个键-值对应 model 中的字段, 键名需与 model 的字段名相同</h4> <table><thead><tr><th style="text-align:center;">属性</th> <th style="text-align:center;">说明</th> <th style="text-align:center;">类型</th> <th style="text-align:center;">是否必填</th> <th style="text-align:center;">默认值</th></tr></thead> <tbody><tr><td style="text-align:center;">label</td> <td style="text-align:center;">form item 的 label</td> <td style="text-align:center;">string</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">type</td> <td style="text-align:center;">输入的数据类型，为 number 时，input 只能输入 number，为 array 或者 object 时，对应的是 model 中，该字段的数据类型。即，当 model.demo = {} 时，那么 items.demo.type = &quot;object&quot;,这是必须的，这样才能正确映射 model 的结构。array 同理。</td> <td style="text-align:center;">string</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">items</td> <td style="text-align:center;">items 可以嵌套，当 type 为 object、array 时，items 是必填的，此时其他属性建议不要填写。在嵌套结构中，只保留 items、type 即可</td> <td style="text-align:center;">object</td> <td style="text-align:center;">-</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">component</td> <td style="text-align:center;">当前 form item 的表单元素，可选值 input、textarea、select、radio...支持所有 element 的表单元素。填写时省略'el-'即可。 也可以传入自定义组件、或者带有 render 的 vue 对象<code>'' || &lt;Custom /&gt; || {render: () =&gt; {}}</code></td> <td style="text-align:center;">string、object</td> <td style="text-align:center;">-</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">disabled</td> <td style="text-align:center;">控制 item 的 disabled</td> <td style="text-align:center;">boolean</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">visible</td> <td style="text-align:center;">控制 item 的显示隐藏</td> <td style="text-align:center;">string</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">events</td> <td style="text-align:center;">field 的事件，如 input 的 change 事件等</td> <td style="text-align:center;">object</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">field （见下文）</td> <td style="text-align:center;">field 的所有配置，通过 v-bind 绑定，支持所有 element 的配置（会在下文介绍）</td> <td style="text-align:center;">string</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">rules</td> <td style="text-align:center;">form item 的校验规则</td> <td style="text-align:center;">array</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">config</td> <td style="text-align:center;">form item 的 config，如 labelWidth 等</td> <td style="text-align:center;">string</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">dynamicProps</td> <td style="text-align:center;">当传入的 component 是自定义的组件时，通过该属性将 prop 传入自定义组件</td> <td style="text-align:center;">string</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">slot</td> <td style="text-align:center;">所有 field 元素的 slot，键即为 slot 名，值和 component 一样，每条键名为 slot 名（见 element）<code>'' || &lt;Custom /&gt; || {render: () =&gt; {}}</code></td> <td style="text-align:center;">object</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">addable</td> <td style="text-align:center;">type 为 array 时，是否显示增加按钮</td> <td style="text-align:center;">boolean</td> <td style="text-align:center;">否</td> <td style="text-align:center;">true</td></tr> <tr><td style="text-align:center;">removeAble</td> <td style="text-align:center;">type 为 array 时，是否显示删除按钮</td> <td style="text-align:center;">boolean</td> <td style="text-align:center;">否</td> <td style="text-align:center;">true</td></tr> <tr><td style="text-align:center;">addButton</td> <td style="text-align:center;">增加按钮的配置</td> <td style="text-align:center;">object</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">removeButton</td> <td style="text-align:center;">删除按钮的配置</td> <td style="text-align:center;">object</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">removeAble</td> <td style="text-align:center;">type 为 array 时，是否显示删除按钮</td> <td style="text-align:center;">boolean</td> <td style="text-align:center;">否</td> <td style="text-align:center;">true</td></tr> <tr><td style="text-align:center;">removeAble</td> <td style="text-align:center;">type 为 array 时，是否显示删除按钮</td> <td style="text-align:center;">boolean</td> <td style="text-align:center;">否</td> <td style="text-align:center;">true</td></tr></tbody></table> <h3 id="field"><a href="#field" class="header-anchor">#</a> field</h3> <table><thead><tr><th style="text-align:center;">属性</th> <th style="text-align:center;">说明</th> <th style="text-align:center;">类型</th> <th style="text-align:center;">是否必填</th> <th style="text-align:center;">默认值</th></tr></thead> <tbody><tr><td style="text-align:center;">option</td> <td style="text-align:center;">当 component 为 select、radio、checkbox 等时，必填。结构为 <code>[{label: &quot;&quot;, value: 1}]</code></td> <td style="text-align:center;">array</td> <td style="text-align:center;">是</td> <td style="text-align:center;">-</td></tr> <tr><td style="text-align:center;">inner</td> <td style="text-align:center;">field 元素的默认 slot，类型和 component 一致<code>'' || &lt;Custom /&gt; || {render: () =&gt; {}}</code></td> <td style="text-align:center;">string、object</td> <td style="text-align:center;">否</td> <td style="text-align:center;">-</td></tr></tbody></table> <h2 id="例子"><a href="#例子" class="header-anchor">#</a> 例子</h2> <details class="custom-block details"><summary>点击查看代码</summary> <div class="language-js extra-class"><pre class="language-js"><code><span class="token punctuation">{</span>
+    title<span class="token operator">:</span> <span class="token string">&quot;这是一个标题&quot;</span><span class="token punctuation">,</span>
+    border<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    description<span class="token operator">:</span> <span class="token string">&quot;这是一段描述xxxxxxxxxxx&quot;</span><span class="token punctuation">,</span>
+    config<span class="token operator">:</span> <span class="token punctuation">{</span>
+      inline<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+      labelSuffix<span class="token operator">:</span> <span class="token string">&quot;:&quot;</span><span class="token punctuation">,</span>
+      labelWidth<span class="token operator">:</span> <span class="token string">&quot;120px&quot;</span><span class="token punctuation">,</span>
+      hideRequiredAsterisk<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+      labelPosition<span class="token operator">:</span> <span class="token string">&quot;top&quot;</span><span class="token punctuation">,</span>
+      statusIcon<span class="token operator">:</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    buttonConfig<span class="token operator">:</span> <span class="token punctuation">{</span>
+      common<span class="token operator">:</span> <span class="token punctuation">{</span>
+        type<span class="token operator">:</span> <span class="token string">&quot;primary &quot;</span><span class="token punctuation">,</span>
+        size<span class="token operator">:</span> <span class="token string">&quot;mini&quot;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      cancelButton<span class="token operator">:</span> <span class="token punctuation">{</span>
+        type<span class="token operator">:</span> <span class="token string">&quot;danger&quot;</span><span class="token punctuation">,</span>
+        inner<span class="token operator">:</span> <span class="token string">&quot;修改&quot;</span><span class="token punctuation">,</span>
+        disabled<span class="token operator">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span>
+      submitButton<span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    items<span class="token operator">:</span> <span class="token punctuation">{</span>
+        date<span class="token operator">:</span> <span class="token punctuation">{</span>
+          border<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+          label<span class="token operator">:</span> <span class="token string">&quot;date&quot;</span><span class="token punctuation">,</span>
+          type<span class="token operator">:</span> <span class="token string">&quot;array&quot;</span><span class="token punctuation">,</span>
+          addable<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+          addButton<span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token comment">// type: &quot;danger&quot;,</span>
+            <span class="token comment">// inner: &quot;增加&quot;</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          removeButton<span class="token operator">:</span> <span class="token punctuation">{</span>
+            inner<span class="token operator">:</span> <span class="token string">&quot;删除1&quot;</span><span class="token punctuation">,</span>
+            disabled<span class="token operator">:</span> <span class="token boolean">false</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          items<span class="token operator">:</span> <span class="token punctuation">{</span>
+            label<span class="token operator">:</span> <span class="token string">&quot;date&quot;</span><span class="token punctuation">,</span>
+            component<span class="token operator">:</span> <span class="token string">&quot;input&quot;</span><span class="token punctuation">,</span>
+            rules<span class="token operator">:</span> <span class="token punctuation">[</span>
+              <span class="token punctuation">{</span> required<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> message<span class="token operator">:</span> <span class="token string">&quot;年龄不能为空&quot;</span><span class="token punctuation">,</span> trigger<span class="token operator">:</span> <span class="token string">&quot;change&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+              <span class="token punctuation">{</span> type<span class="token operator">:</span> <span class="token string">&quot;number&quot;</span><span class="token punctuation">,</span> message<span class="token operator">:</span> <span class="token string">&quot;请输入数字&quot;</span><span class="token punctuation">,</span> trigger<span class="token operator">:</span> <span class="token string">&quot;change&quot;</span> <span class="token punctuation">}</span>
+            <span class="token punctuation">]</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        transfer<span class="token operator">:</span> <span class="token punctuation">{</span>
+          label<span class="token operator">:</span> <span class="token string">&quot;transfer&quot;</span><span class="token punctuation">,</span>
+          type<span class="token operator">:</span> <span class="token string">&quot;object&quot;</span><span class="token punctuation">,</span>
+          items<span class="token operator">:</span> <span class="token punctuation">{</span>
+            name<span class="token operator">:</span> <span class="token punctuation">{</span>
+              label<span class="token operator">:</span> <span class="token string">&quot;name&quot;</span><span class="token punctuation">,</span>
+              component<span class="token operator">:</span> <span class="token string">&quot;input&quot;</span><span class="token punctuation">,</span>
+              rules<span class="token operator">:</span> <span class="token punctuation">[</span>
+                <span class="token punctuation">{</span> required<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> message<span class="token operator">:</span> <span class="token string">&quot;年龄不能为空&quot;</span><span class="token punctuation">,</span> trigger<span class="token operator">:</span> <span class="token string">&quot;change&quot;</span> <span class="token punctuation">}</span>
+              <span class="token punctuation">]</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            home<span class="token operator">:</span> <span class="token punctuation">{</span>
+              type<span class="token operator">:</span> <span class="token string">&quot;object&quot;</span><span class="token punctuation">,</span>
+              items<span class="token operator">:</span> <span class="token punctuation">{</span>
+                address<span class="token operator">:</span> <span class="token punctuation">{</span>
+                  type<span class="token operator">:</span> <span class="token string">&quot;array&quot;</span><span class="token punctuation">,</span>
+                  label<span class="token operator">:</span> <span class="token string">&quot;地址&quot;</span><span class="token punctuation">,</span>
+                  rules<span class="token operator">:</span> <span class="token punctuation">[</span>
+                    <span class="token punctuation">{</span>
+                      required<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+                      message<span class="token operator">:</span> <span class="token string">&quot;嵌套&quot;</span><span class="token punctuation">,</span>
+                      trigger<span class="token operator">:</span> <span class="token string">&quot;change&quot;</span>
+                    <span class="token punctuation">}</span>
+                  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                  items<span class="token operator">:</span> <span class="token punctuation">{</span>
+                    type<span class="token operator">:</span> <span class="token string">&quot;object&quot;</span><span class="token punctuation">,</span>
+                    items<span class="token operator">:</span> <span class="token punctuation">{</span>
+                      addr<span class="token operator">:</span> <span class="token punctuation">{</span>
+                        component<span class="token operator">:</span> <span class="token string">&quot;input&quot;</span>
+                      <span class="token punctuation">}</span>
+                    <span class="token punctuation">}</span>
+                  <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                parents<span class="token operator">:</span> <span class="token punctuation">{</span>
+                  type<span class="token operator">:</span> <span class="token string">&quot;object&quot;</span><span class="token punctuation">,</span>
+                  items<span class="token operator">:</span> <span class="token punctuation">{</span>
+                    father<span class="token operator">:</span> <span class="token punctuation">{</span>
+                      label<span class="token operator">:</span> <span class="token string">&quot;father&quot;</span><span class="token punctuation">,</span>
+                      component<span class="token operator">:</span> <span class="token string">&quot;input&quot;</span><span class="token punctuation">,</span>
+                      rules<span class="token operator">:</span> <span class="token punctuation">[</span>
+                        <span class="token punctuation">{</span> required<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> message<span class="token operator">:</span> <span class="token string">&quot;嵌套&quot;</span><span class="token punctuation">,</span> trigger<span class="token operator">:</span> <span class="token string">&quot;change&quot;</span> <span class="token punctuation">}</span>
+                      <span class="token punctuation">]</span>
+                    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                    mather<span class="token operator">:</span> <span class="token punctuation">{</span>
+                      label<span class="token operator">:</span> <span class="token string">&quot;mather&quot;</span><span class="token punctuation">,</span>
+                      component<span class="token operator">:</span> <span class="token string">&quot;slider&quot;</span><span class="token punctuation">,</span>
+                      rules<span class="token operator">:</span> <span class="token punctuation">[</span>
+                        <span class="token punctuation">{</span> required<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> message<span class="token operator">:</span> <span class="token string">&quot;嵌套&quot;</span><span class="token punctuation">,</span> trigger<span class="token operator">:</span> <span class="token string">&quot;change&quot;</span> <span class="token punctuation">}</span>
+                      <span class="token punctuation">]</span>
+                    <span class="token punctuation">}</span>
+                  <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                flowers<span class="token operator">:</span> <span class="token punctuation">{</span>
+                  label<span class="token operator">:</span> <span class="token string">&quot;flowers&quot;</span><span class="token punctuation">,</span>
+                  component<span class="token operator">:</span> <span class="token string">&quot;select&quot;</span><span class="token punctuation">,</span>
+                  rules<span class="token operator">:</span> <span class="token punctuation">[</span>
+                    <span class="token punctuation">{</span> required<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> message<span class="token operator">:</span> <span class="token string">&quot;嵌套&quot;</span><span class="token punctuation">,</span> trigger<span class="token operator">:</span> <span class="token string">&quot;change&quot;</span> <span class="token punctuation">}</span>
+                  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+                  field<span class="token operator">:</span> <span class="token punctuation">{</span>
+                    multiple<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+                    options<span class="token operator">:</span> <span class="token punctuation">[</span>
+                      <span class="token punctuation">{</span>
+                        value<span class="token operator">:</span> <span class="token string">&quot;1&quot;</span><span class="token punctuation">,</span>
+                        label<span class="token operator">:</span> <span class="token string">&quot;上海&quot;</span>
+                      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                      <span class="token punctuation">{</span>
+                        value<span class="token operator">:</span> <span class="token string">&quot;2&quot;</span><span class="token punctuation">,</span>
+                        label<span class="token operator">:</span> <span class="token string">&quot;北京&quot;</span>
+                      <span class="token punctuation">}</span>
+                    <span class="token punctuation">]</span>
+                  <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+              <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        basic<span class="token operator">:</span> <span class="token punctuation">{</span>
+          label<span class="token operator">:</span> <span class="token string">&quot;基础数据类型&quot;</span><span class="token punctuation">,</span>
+          component<span class="token operator">:</span> <span class="token string">&quot;input&quot;</span><span class="token punctuation">,</span>
+          border<span class="token operator">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">,</span>
+          events<span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token function-variable function">input</span><span class="token operator">:</span> <span class="token parameter">val</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+              console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          rules<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span> required<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> message<span class="token operator">:</span> <span class="token string">&quot;嵌套&quot;</span><span class="token punctuation">,</span> trigger<span class="token operator">:</span> <span class="token string">&quot;change&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          field<span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div></details></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/template/" class="prev">
+        Template
+      </a></span> <span class="next"><a href="/layout/">
+        布局
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.79171cf6.js" defer></script><script src="/assets/js/4.0d331224.js" defer></script><script src="/assets/js/15.24b4ff3a.js" defer></script>
+  </body>
+</html>

@@ -4,7 +4,8 @@ module.exports = {
   themeConfig: {
     nav: [
       { text: '文档', link: '/guide/' },
-      { text: '案例', link: '/demo/simple/' },
+      { text: '案例', link: '/simple/' },
+      { text: 'Element UI', link: 'https://element.eleme.cn/#/zh-CN/component/form' },
       { text: 'Github', link: 'https://github.com/China-Wesley/el-form-schema' }
     ],
 
@@ -50,15 +51,12 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 1,
         children: [
-          '/demo/simple/',
-          '/demo/list/',
-          '/demo/layout/',
-          '/demo/complex/'
+          '/simple/',
         ]
       }
     ],
 
-    smoothScroll: true
+    smoothScroll: false
   }
 }
   

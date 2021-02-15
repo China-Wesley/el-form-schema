@@ -3,17 +3,10 @@
     ref="form"
     :schema="schema"
     :model="model"
-    cancel-button
     submit-button
     reset-button
-    button
     :layout="layout"
-    @cancel="cancelHand"
-    @submit="submitHand"
-    @reset="resetHand"
-    @validate="handleFunc"
-    @add="addFunc"
-    @remove="removeFunc"
+    @reset="handleReset"
   >
   </el-form-schema>
 </template>
@@ -28,6 +21,11 @@ export default {
         model,
         schema,
         layout
+      }
+    },
+    methods: {
+      handleReset() {
+        this.$refs.form.clearValidate()
       }
     }
 }

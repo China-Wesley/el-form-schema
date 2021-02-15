@@ -1,0 +1,21 @@
+[
+  {
+    "rowAttrs": {
+      "type": "flex",
+      "style": "flex-wrap: wrap;"
+    },
+    "col": [
+      {
+        "fields": [
+          "name",
+          "region",
+          "date1",
+          "delivery",
+          "type",
+          "resource",
+          "desc"
+        ]
+      }
+    ]
+  }
+]
