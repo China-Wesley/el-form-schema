@@ -17,11 +17,13 @@
       @remove="removeFunc"
     >
     </el-form-schema>
+    <simple />
   </div>
 </template>
 
 <script>
 import _ from "lodash";
+import Simple from "../docs/.vuepress/components/Simple";
 import model111 from "../docs/.vuepress/components/normal_model.json";
 import schema111 from "../docs/.vuepress/components/normal_schema.json";
 import layout111 from "../docs/.vuepress/components/normal_layout.json";
@@ -54,6 +56,9 @@ import layout111 from "../docs/.vuepress/components/normal_layout.json";
 // }
 
 export default {
+  components: {
+    Simple
+  },
   data() {
     return {
       id: 0,

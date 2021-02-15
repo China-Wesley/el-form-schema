@@ -274,7 +274,10 @@ export default class ElFoemSchema extends Vue {
     };
   }
 
-  // 获取ref
+  /**
+   * @param {string} targetProp 目标target值
+   * @param {string} type ref类型，item、field
+   */
   public getRef(targetProp: string, type = "item") {
     if (!targetProp) {
       return removeAttr(this.$refs, this.formRef);
@@ -289,7 +292,10 @@ export default class ElFoemSchema extends Vue {
     );
   }
 
-  // 获取ref,暴露给外边了
+  /**
+   * @param {string} targetProp 目标target
+   * @param {any[]} refs 所有的ref
+   */
   private commonGetRefFunc(targetProp: string, refs: any) {
     const modelStructObj = _.cloneDeep(this.model); // 具有model结构的
     const totalProp: any = [];
@@ -317,7 +323,10 @@ export default class ElFoemSchema extends Vue {
     }
   }
 
-  // 通过搜索ref的prop找到路径
+  /**
+   * @param {any[]} props 所有的路劲
+   * @param {any} targetProp 目标路径
+   */
   private findTargetProp(props: any[], targetProp: any) {
     const totalProp = _.cloneDeep(props);
     const targetPath: any[] = [];
@@ -355,6 +364,9 @@ export default class ElFoemSchema extends Vue {
     return col && col.fields && col.fields.length > 0;
   }
 
+  /**
+   * @param {any[]} fields 所有的要显示的fields
+   */
   private _filterFields(fields: any[]) {
     const newFields = {};
     const cloneFields = _.cloneDeep(this.schema.items);
@@ -389,10 +401,20 @@ export default class ElFoemSchema extends Vue {
     });
   }
 
+  /**
+   * @param {object} schema add按钮所在的item的schema
+   * @param {any} model item映射的model
+   * @param {any} prop item的路径或者说prop
+   */
   private _handleAdd(schema: object, model: any, prop: any) {
     this.$emit("add", prop, model, schema);
   }
 
+  /**
+   * @param {object} schema add按钮所在的item的schema
+   * @param {any} model item映射的model
+   * @param {any} prop item的路径或者说prop
+   */
   private _handleRemove(schema: object, model: any, prop: any) {
     this.$emit("remove", prop, model, schema);
   }
