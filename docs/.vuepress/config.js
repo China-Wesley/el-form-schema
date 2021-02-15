@@ -57,6 +57,7 @@ module.exports = {
     ],
 
     smoothScroll: false
-  }
+  },
+  base:"/formSchema/"
 }
   
