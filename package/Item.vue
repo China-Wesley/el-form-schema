@@ -31,6 +31,7 @@
       :ref="prop"
       :dynamic-component="getdDynamicComponent"
       :prop="prop"
+      :class="`el-form-schema-field`"
       :model="model"
       :schema="schema"
       :parent-schema="parentSchema"
@@ -43,6 +44,7 @@
         :ref="prop"
         :key="_prop"
         :prop="`${prop}.${_prop}`"
+        :class="`el-form-schema-item`"
         :schema="innerSchema"
         :parent-schema="schema"
         :labelSuffix="labelSuffix"
@@ -58,6 +60,7 @@
           :ref="prop"
           :prop="`${prop}[${index}]`"
           :model="model"
+          :class="`el-form-schema-item`"
           :schema="schema.items"
           :parent-schema="schema"
           :labelSuffix="labelSuffix"
@@ -73,6 +76,7 @@
                   inner: '增加'
                 }
           "
+          :class="`el-form-schema-item-addButton`"
           :prop="`addButton${prop}`"
           @click="_handleAddButton"
         ></common-button>
@@ -86,6 +90,7 @@
                   inner: '删除'
                 }
           "
+          :class="`el-form-schema-item-removeButton`"
           :prop="`removeAble${prop}`"
           @click="_handleRemoveButton"
         ></common-button>

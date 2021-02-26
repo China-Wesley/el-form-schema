@@ -84,12 +84,14 @@
       <common-button
         v-if="showButton.button || showButton.resetButton"
         :config="{ ...resetButtonConfig, ...commonButtonConfig }"
+        :class="`el-form-schema-resetButton`"
         prop="resetButton"
         @click="_reset"
       ></common-button>
       <common-button
         v-if="showButton.button || showButton.cancelButton"
         :config="{ ...cancelButtonConfig, ...commonButtonConfig }"
+        :class="`el-form-schema-cancelButton`"
         prop="cancelButton"
         @click="$emit('cancel')"
       >
@@ -97,6 +99,7 @@
       <common-button
         v-if="showButton.button || showButton.submitButton"
         :config="{ ...submitButtonConfig, ...commonButtonConfig }"
+        :class="`el-form-schema-submitButton`"
         prop="submitButton"
         @click="_submit"
       >

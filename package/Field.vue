@@ -6,6 +6,7 @@
         dynamicComponent === 'el-plain-text' &&
           (schema.visible ? schema.visible : true)
       "
+      :class="`el-form-schema-field-plain-text`"
       :ref="prop"
       v-bind="schema.field"
       v-on="getEventsName"
@@ -19,11 +20,15 @@
         :href="gobleModel[prop]"
         :ref="prop"
         v-bind="schema.field"
+        :class="`el-form-schema-field-link`"
         :disabled="schema.disabled"
         v-on="getEventsName"
       >
         <template v-if="schema.field && schema.field.inner">
-          <span v-if="typeof schema.field.inner === 'string'">
+          <span
+            v-if="typeof schema.field.inner === 'string'"
+            class="el-form-schema-field-link-text"
+          >
             {{ schema.field.inner }}
           </span>
           <component v-else :is="schema.field.inner"></component>
@@ -40,6 +45,7 @@
       "
       :ref="prop"
       :is="dynamicComponent"
+      class="el-form-schema-field-input-number"
       :disabled="schema.disabled"
       v-model.number="targetModel[targetProp]"
       v-bind="$attrs"
@@ -64,6 +70,7 @@
         :disabled="schema.disabled"
         v-on="getEventsName"
         :ref="prop"
+        class="el-form-schema-field-upload"
       >
         <template v-if="schema.field.drag">
           <i class="el-icon-upload"></i>
@@ -96,6 +103,7 @@
         dynamicComponent === 'el-radio-group' || dynamicComponent === 'el-radio'
       "
       :ref="prop"
+      class="el-form-schema-field-radio-group"
       :disabled="schema.disabled"
       v-bind="schema.field"
       v-model="targetModel[targetProp]"
@@ -119,6 +127,7 @@
         dynamicComponent === 'el-checkbox-group' ||
           dynamicComponent === 'el-checkbox'
       "
+      class="el-form-schema-field-checkbox"
       :ref="prop"
       :disabled="schema.disabled"
       v-bind="schema.field"
@@ -141,6 +150,7 @@
       v-else-if="dynamicComponent === 'el-select'"
       :ref="prop"
       :disabled="schema.disabled"
+      class="el-form-schema-field-select"
       v-bind="schema.field"
       v-model="targetModel[targetProp]"
       v-on="getEventsName"
@@ -190,6 +200,11 @@
       :ref="prop"
       :is="dynamicComponent"
       :disabled="schema.disabled"
+      :class="
+        `el-form-schema-field-${
+          typeof dynamicComponent === '' ? dynamicComponent : 'dynamicComponent'
+        }`
+      "
       v-model="targetModel[targetProp]"
       v-bind="$attrs"
       v-on="getEventsName"

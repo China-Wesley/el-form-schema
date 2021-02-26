@@ -14,10 +14,17 @@
   >
     <!-- 默认slot -->
     <template v-if="config && config.inner">
-      <span v-if="typeof config.inner === 'string'">
+      <span
+        v-if="typeof config.inner === 'string'"
+        :class="`el-form-schema-button-inner`"
+      >
         {{ config.inner }}
       </span>
-      <component v-else-if="config.inner.render" :is="config.inner"></component>
+      <component
+        v-else-if="config.inner.render"
+        :is="config.inner"
+        :class="`el-form-schema-button-inner`"
+      ></component>
     </template>
     <!-- 具名的slot 可能有多个 -->
     <template v-if="config.slot">
