@@ -11,13 +11,13 @@
       v-bind="schema.field"
       v-on="getEventsName"
     >
-      {{ String(gobleModel[prop]) }}
+      {{ String(gobleModel[targetProp]) }}
     </span>
 
     <!-- 链接 -->
     <template v-else-if="dynamicComponent === 'el-link'">
       <el-link
-        :href="gobleModel[prop]"
+        :href="gobleModel[targetProp]"
         :ref="prop"
         v-bind="schema.field"
         :class="`el-form-schema-field-link`"
@@ -33,7 +33,7 @@
           </span>
           <component v-else :is="schema.field.inner"></component>
         </template>
-        <span v-else>{{ gobleModel[prop] }}</span>
+        <span v-else>{{ gobleModel[targetProp] }}</span>
       </el-link>
     </template>
 
